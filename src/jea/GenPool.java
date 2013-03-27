@@ -1,7 +1,9 @@
 package jea;
 
-abstract public class GenPool {
+import reiseproblem.Staedte;
+
+public interface GenPool {
 	
-	abstract public void calcFitness(Permutation permutation);
+	public void calcFitness(Permutation permutation);
 
 }

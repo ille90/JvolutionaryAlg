@@ -1,25 +1,40 @@
 package jea;
 
-import java.util.Vector;
-
-public class Population {
+public class Population<T extends GenPool> {
 	
-	int currentPopulation;
+	int currentGeneration;
+	int permutationCount;
 	int maxGeneration;
-	Vector<Generation> generations;
-	int children;
+	Generation<T> generation;
+	int childrenCount;
 	int limit;
 	int geneCount;
 	int[] genes;
 	
-	public Population() {
+	public Population(int permutationCount) {
 		// TODO Auto-generated constructor stub
+		this.permutationCount = permutationCount;
+		generation = new Generation<T>(permutationCount);
 	}
 	
-	void start() {
-		currentPopulation = 0;
+	void run() {
+		currentGeneration = 0;
+		generation.fillInitialGeneration();
+		generation.calcFitness();
+		while(currentGeneration < maxGeneration) {
+			Generation<T> children = new Generation<T>(childrenCount);
+			int currentChild = 1;
+			while(currentChild <= childrenCount) {
+				//TODO: Eltern wählen etc. (Schritt 7-10)
+				childrenCount++;
+			}
+			children.calcFitness();
+			currentGeneration++;
+			generation = generation.getNextGeneration(children);
+		}
 	}
 	
-	void initFirstGeneration() {
+	public Permutation<T> getBestPermutation() {
+		return generation.getBestPermutation();
 	}
 }
