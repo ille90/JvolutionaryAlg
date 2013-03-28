@@ -16,7 +16,10 @@ public class Permutation {
 	
 	public Permutation(Permutation permutation) {
 		this.geneCount = permutation.geneCount;
-		genes = permutation.genes;
+		genes = new int[geneCount];
+		for(int i = 0; i < geneCount; i++) {
+			genes[i] = permutation.genes[i];
+		}
 	}
 	
 	public static Permutation getRandomPermutation(int geneCount) {

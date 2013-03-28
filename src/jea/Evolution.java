@@ -8,7 +8,7 @@ public class Evolution {
 	public static Permutation mutation(Permutation permutation) {
 		int typ = (int) (Math.random() * 3);
 		Permutation newPermutation = new Permutation(permutation);
-		if (3 != typ) {
+		if (2 != typ) {
 			int geneOne = (int) (Math.random() * permutation.getGeneCount());
 			int geneTwo = (int) (Math.random() * permutation.getGeneCount());
 			while (geneOne == geneTwo) {
