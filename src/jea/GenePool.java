@@ -1,6 +1,8 @@
 package jea;
 
-public interface GenPool {
+public interface GenePool {
+	
+	public int geneCount();
 	
 	public void calcFitness(Permutation permutation);
 

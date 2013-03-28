@@ -1,40 +1,53 @@
 package jea;
 
-public class Population<T extends GenPool> {
+public class Population {
 	
 	int currentGeneration;
 	int permutationCount;
 	int maxGeneration;
-	Generation<T> generation;
+	Generation generation;
 	int childrenCount;
-	int limit;
-	int geneCount;
-	int[] genes;
+	float limit;
 	
-	public Population(int permutationCount) {
+	public Population(int permutationCount, int maxGeneration, int childrenCount, float limit) {
 		// TODO Auto-generated constructor stub
 		this.permutationCount = permutationCount;
-		generation = new Generation<T>(permutationCount);
+		this.maxGeneration = maxGeneration;
+		this.childrenCount = childrenCount;
+		this.limit = limit;
 	}
 	
-	void run() {
+	public void init() {
 		currentGeneration = 0;
+		generation = new Generation(permutationCount);
 		generation.fillInitialGeneration();
 		generation.calcFitness();
+	}
+	
+	public void run() {
 		while(currentGeneration < maxGeneration) {
-			Generation<T> children = new Generation<T>(childrenCount);
+			System.out.print((currentGeneration + 1) + ". Generation: ");
+			Generation children = new Generation(childrenCount);
 			int currentChild = 1;
 			while(currentChild <= childrenCount) {
-				//TODO: Eltern wählen etc. (Schritt 7-10)
-				childrenCount++;
+				Permutation father = generation.getRandomPermutation();
+				Permutation mother = generation.getRandomPermutation();
+				while(father == mother)
+					mother = generation.getRandomPermutation();
+				//TODO: Zufallszahls u (Schritt 8)
+				Permutation child = Evolution.recombination(father, mother);
+				child = Evolution.mutation(child);
+				children.addPermutation(child);
+				currentChild++;
 			}
 			children.calcFitness();
 			currentGeneration++;
 			generation = generation.getNextGeneration(children);
+			System.out.println("fetig");
 		}
 	}
 	
-	public Permutation<T> getBestPermutation() {
+	public Permutation getBestPermutation() {
 		return generation.getBestPermutation();
 	}
 }

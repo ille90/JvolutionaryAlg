@@ -2,14 +2,31 @@ package jea;
 
 import java.util.Vector;
 
-public class Generation<T extends GenPool> {
+public class Generation {
 
-	int permutationCount;
-	Vector<Permutation<T>> permutations;
+	private int permutationCount;
+	private Vector<Permutation> permutations;
 
 	public Generation(int permutationCount) {
 		this.permutationCount = permutationCount;
-		permutations = new Vector<Permutation<T>>();
+		permutations = new Vector<Permutation>();
+	}
+	
+	public int getPermutationCount() {
+		return permutationCount;
+	}
+
+	public void addPermutation(Permutation permutation) {
+		if(permutations.size() < permutationCount)
+			permutations.add(permutation);
+	}
+	
+	public Permutation getPermutation(int position) {
+		return permutations.get(position);
+	}
+	
+	public Permutation getRandomPermutation() {
+		return permutations.get((int) (Math.random() * permutationCount));
 	}
 
 	/**
@@ -19,7 +36,7 @@ public class Generation<T extends GenPool> {
 	 */
 	public void fillInitialGeneration() {
 		for (int i = permutations.size(); i < permutationCount; i++) {
-			// TODO: Vector füllen
+			permutations.add(Permutation.getRandomPermutation(GenePoolSingleton.getInstance().getGenePool().geneCount()));
 		}
 	}
 	
@@ -28,7 +45,7 @@ public class Generation<T extends GenPool> {
 	 * 
 	 */
 	public void calcFitness() {
-		for (Permutation<T> permutation : permutations) {
+		for (Permutation permutation : permutations) {
 			permutation.calcFitness();
 		}
 	}
@@ -41,9 +58,9 @@ public class Generation<T extends GenPool> {
 	 * @param children
 	 * @return
 	 */
-	public Generation<T> getNextGeneration(Generation<T> children) {
-		Generation<T> newGeneration = new Generation<T>(permutationCount);
-		Vector<Permutation<T>> newPermutations = new Vector<Permutation<T>>();
+	public Generation getNextGeneration(Generation children) {
+		Generation newGeneration = new Generation(permutationCount);
+		Vector<Permutation> newPermutations = new Vector<Permutation>();
 		newPermutations.addAll(permutations);
 		newPermutations.addAll(children.permutations);
 		while (permutationCount < newPermutations.size()) {
@@ -66,10 +83,10 @@ public class Generation<T extends GenPool> {
 	 * 
 	 * @return
 	 */
-	public Permutation<T> getBestPermutation() {
-		Permutation<T> bestPermutation = null;
+	public Permutation getBestPermutation() {
+		Permutation bestPermutation = null;
 		int bestFitness = Integer.MIN_VALUE;
-		for (Permutation<T> permutation : permutations) {
+		for (Permutation permutation : permutations) {
 			if (bestFitness < permutation.getFitness()) {
 				bestPermutation = permutation;
 				bestFitness = permutation.getFitness();
