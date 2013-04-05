@@ -34,7 +34,7 @@ public class Staedte implements GenePool{
 	public void printPermutationInfo(Permutation permutation) {
 		String staedtefolge = "";
 		for(int i = 0; i < geneCount(); i++) {
-			staedtefolge += permutation.getGene(i) + " ,";
+			staedtefolge += permutation.getGene(i) + ", ";
 		}
 		staedtefolge += permutation.getGene(0);
 		

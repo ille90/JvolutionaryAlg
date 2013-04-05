@@ -16,9 +16,9 @@ public class RundreiseBeispiel {
 		costs.put(4, new int[] {4, 9, 17, 6, 0, 11});
 		costs.put(5, new int[] {7, 12, 8, 5, 11, 0});
 		
-		int permutationCount = 10;
-		int maxGeneration = 10;
-		int childrenCount = 10;
+		int permutationCount = 5;
+		int maxGeneration = 15;
+		int childrenCount = 15;
 		float limit = 0.5f;
 		
 		Staedte staedte = new Staedte(costs);

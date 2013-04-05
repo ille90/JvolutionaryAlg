@@ -22,6 +22,12 @@ public class Permutation {
 		}
 	}
 	
+	/**
+	 * getRandomPermutation gibt ein Individuum mit zufälliger Genkombination zurück
+	 * 
+	 * @param geneCount
+	 * @return
+	 */
 	public static Permutation getRandomPermutation(int geneCount) {
 		Permutation permutation = new Permutation(geneCount);
 		int i = 0;
