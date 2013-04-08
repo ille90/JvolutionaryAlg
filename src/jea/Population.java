@@ -1,5 +1,7 @@
 package jea;
 
+import java.util.Vector;
+
 public class Population {
 
 	int currentGeneration;
@@ -29,7 +31,7 @@ public class Population {
 		generation.calcFitness();
 	}
 
-	public void run() {
+	public void run(selectionType type) {
 		while (currentGeneration < maxGeneration) {
 			
 			System.out.print((currentGeneration + 1) + ". Generation: ");
@@ -49,14 +51,23 @@ public class Population {
 					Permutation child = Evolution.recombination(father, mother);
 					child = Evolution.mutation(child);
 					children.addPermutation(child);
-				}
-				
-				currentChild++;
+					currentChild++;
+				}				
 			}
 			
 			children.calcFitness();
 			currentGeneration++;
-			generation = generation.getNextGeneration(children);
+			
+			if(type == selectionType.commaSelection){
+				generation = environmentalSelection.determSelection(children);
+			}else{
+				Vector<Permutation> newPermutations = new Vector<Permutation>();
+				newPermutations.addAll(generation.getPermutations());
+				newPermutations.addAll(children.getPermutations());
+				generation.setPermutations(newPermutations);
+				generation = environmentalSelection.determSelection(generation);
+			}
+			
 			System.out.println("fertig");
 		}
 	}

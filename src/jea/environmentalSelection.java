@@ -2,7 +2,7 @@ package jea;
 
 import java.util.Vector;
 
-public class Selection {
+public class environmentalSelection {
 	
 	public static Generation determSelection(Generation generation){
 		Generation newGeneration = new Generation(generation.getPermutationCount());
