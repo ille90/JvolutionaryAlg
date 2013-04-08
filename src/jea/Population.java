@@ -31,22 +31,29 @@ public class Population {
 
 	public void run() {
 		while (currentGeneration < maxGeneration) {
+			
 			System.out.print((currentGeneration + 1) + ". Generation: ");
 			Generation children = new Generation(childrenCount);
 			int currentChild = 1;
+			
 			while (currentChild <= childrenCount) {
+				
 				Permutation father = generation.getRandomPermutation();
 				Permutation mother = generation.getRandomPermutation();
+				
 				while (father == mother)
 					mother = generation.getRandomPermutation();
 				double u = Math.random();
+				
 				if (u < limit) {
 					Permutation child = Evolution.recombination(father, mother);
 					child = Evolution.mutation(child);
 					children.addPermutation(child);
 				}
+				
 				currentChild++;
 			}
+			
 			children.calcFitness();
 			currentGeneration++;
 			generation = generation.getNextGeneration(children);
