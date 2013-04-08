@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 import jea.GenePoolSingleton;
 import jea.Population;
-import jea.selectionType;
+import jea.determSelectionType;
 
 public class RundreiseBeispiel {
 	
 	public static void main(String[] args) {
-		selectionType type = selectionType.commaSelection;
+		determSelectionType type = determSelectionType.commaSelection;
 		HashMap<Integer, int[]> costs = new HashMap<Integer, int[]>();
 		costs.put(0, new int[] {0, 5, 8, 11, 4, 7});	
 		costs.put(1, new int[] {5, 0, 10, 4, 9, 12});
