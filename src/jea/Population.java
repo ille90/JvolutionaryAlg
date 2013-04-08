@@ -31,7 +31,7 @@ public class Population {
 		generation.calcFitness();
 	}
 
-	public void run(selectionType type) {
+	public void run(determSelectionType type) {
 		while (currentGeneration < maxGeneration) {
 			
 			System.out.print((currentGeneration + 1) + ". Generation: ");
@@ -58,7 +58,7 @@ public class Population {
 			children.calcFitness();
 			currentGeneration++;
 			
-			if(type == selectionType.commaSelection){
+			if(type == determSelectionType.commaSelection){
 				generation = environmentalSelection.determSelection(children);
 			}else{
 				Vector<Permutation> newPermutations = new Vector<Permutation>();

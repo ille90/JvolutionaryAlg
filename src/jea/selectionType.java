@@ -1,5 +1,5 @@
 package jea;
 
 public enum selectionType {
-	commaSelection, plusSelection;
+	determSelection, probSelection, rouletteSelection, qSelection, multibleQSelection;
 }
