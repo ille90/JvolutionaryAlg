@@ -1,10 +1,31 @@
 package jea;
 
+import java.util.Vector;
+
 public class Selection {
 	
 	public static Generation determSelection(Generation generation){
+		Generation newGeneration = new Generation(generation.getPermutationCount());
+		Vector<Permutation> newPermutations = new Vector<Permutation>();
+		newPermutations.addAll(generation.getPermutations());
 		
-		return generation;
+		while (generation.getPermutationCount() < newPermutations.size()) {
+			int worstFitness = Integer.MAX_VALUE;
+			int worstPermutation = 0;
+			
+			for(int i = 0; i < newPermutations.size(); i++) {
+				
+				if(worstFitness > newPermutations.get(i).getFitness()) {
+					worstFitness = newPermutations.get(i).getFitness();
+					worstPermutation = i;
+				}
+			}
+			
+			newPermutations.remove(worstPermutation);
+		}
+		
+		newGeneration.setPermutations(newPermutations);
+		return newGeneration;
 	}
 	
 	public static Generation probSelection(Generation generation){

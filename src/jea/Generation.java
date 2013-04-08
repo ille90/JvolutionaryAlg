@@ -25,6 +25,10 @@ public class Generation {
 		return permutations.get(position);
 	}
 	
+	public Vector<Permutation> getPermutations() {
+		return permutations;
+	}
+	
 	public Permutation getRandomPermutation() {
 		return permutations.get((int) (Math.random() * permutationCount));
 	}
@@ -63,17 +67,22 @@ public class Generation {
 		Vector<Permutation> newPermutations = new Vector<Permutation>();
 		newPermutations.addAll(permutations);
 		newPermutations.addAll(children.permutations);
+		
 		while (permutationCount < newPermutations.size()) {
 			int worstFitness = Integer.MAX_VALUE;
 			int worstPermutation = 0;
+			
 			for(int i = 0; i < newPermutations.size(); i++) {
+				
 				if(worstFitness > newPermutations.get(i).getFitness()) {
 					worstFitness = newPermutations.get(i).getFitness();
 					worstPermutation = i;
 				}
 			}
+			
 			newPermutations.remove(worstPermutation);
 		}
+		
 		newGeneration.permutations = newPermutations;
 		return newGeneration;
 	}
@@ -93,5 +102,9 @@ public class Generation {
 			}
 		}
 		return bestPermutation;
+	}
+
+	public void setPermutations(Vector<Permutation> newPermutations) {
+		this.permutations = newPermutations;		
 	}
 }
