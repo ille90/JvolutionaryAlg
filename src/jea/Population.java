@@ -57,7 +57,7 @@ public class Population {
 			children.calcFitness();
 			currentGeneration++;
 			generation = generation.getNextGeneration(children);
-			System.out.println("fetig");
+			System.out.println("fertig");
 		}
 	}
 
