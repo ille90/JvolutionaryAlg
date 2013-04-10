@@ -3,11 +3,7 @@ package jea;
 import java.util.Vector;
 
 /**
-<<<<<<< HEAD
- * Klasse, welche Methoden f�r Elternselektion enth�lt
-=======
  * Klasse, welche Methoden für Elternselektion enthält
->>>>>>> 1c14d484d89da11c3a3d421562e47e16bfccd5be
  * @author Franziska Staake, Tim Illner
  *
  */
@@ -15,25 +11,18 @@ public class parentSelection {
 	
 	/**
 	 * fitnessprobalistische Selektion
-<<<<<<< HEAD
-	 * Methode f�r Bestimmung von Wahrscheinlichkeitswerte
-	 * f�r die Permutationen
-	 * Ausgangspunkt f�r probalistische Auswahlverfahren
-	 * @param generation 	urspr�ngliche Generation
-=======
 	 * Methode für Bestimmung von Wahrscheinlichkeitswerte
 	 * für die Permutationen
 	 * Ausgangspunkt für probalistische Auswahlverfahren
 	 * @param generation 	ursprüngliche Generation
->>>>>>> 1c14d484d89da11c3a3d421562e47e16bfccd5be
 	 * @return Double[]		Wahrscheinlichkeitswerte der Permutationen
 	 */
 	private static Double[] fitnessPropSelection(Generation generation) {
 		
-		//Container f�r die Wahrscheinlichkeitswerte der Permutationen
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
 		Double[] presumptions = new Double[generation.getPermutations().size()];
 		
-		//Fitness der urspr�nglichen Generation
+		//Fitness der ursprünglichen Generation
 		Double  generationFitness = generation.calcFitness();
 		int i = 0;
 		
@@ -44,34 +33,27 @@ public class parentSelection {
 			permutation.calcFitness();
 			
 			//W-Wert bestimmen
-			//Verh�ltnis der Fitness des Individuums zur Fitness aller
+			//Verhältnis der Fitness des Individuums zur Fitness aller
 			presumptions[i] = permutation.getFitness()/generationFitness;
 			
 			i++;
 		}
 		
-		//R�ckgabe des Containers der W-Werte
+		//Rückgabe des Containers der W-Werte
 		return presumptions;
 	}
 	
 	/**
 	 * rangbasierte Selektion
-<<<<<<< HEAD
-	 * Methode f�r Bestimmung von Wahrscheinlichkeitswerte
-	 * f�r die Permutationen
-	 * Ausgangspunkt f�r probalistische Auswahlverfahren
-	 * @param generation 	urspr�ngliche Generation
-=======
 	 * Methode für Bestimmung von Wahrscheinlichkeitswerte
 	 * für die Permutationen
 	 * Ausgangspunkt für probalistische Auswahlverfahren
 	 * @param generation 	ursprüngliche Generation
->>>>>>> 1c14d484d89da11c3a3d421562e47e16bfccd5be
 	 * @return Double[]		Wahrscheinlichkeitswerte der Permutationen
 	 */
 	private static Double[] rankingPropSelection(Generation generation) {
 		
-		//Container f�r die Wahrscheinlichkeitswerte der Permutationen
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
 		Double[] presumptions = new Double[generation.getPermutations().size()];
 		
 		//Anzahl der Individuen der Generation
@@ -83,24 +65,19 @@ public class parentSelection {
 			presumptions[i] = (double) 2/r * (1- ((i-1) / (r-1)));
 		}
 		
-		//R�ckgabe des Containers der W-Werte
+		//Rückgabe des Containers der W-Werte
 		return presumptions;
 	}
 	
 	/**
 	 * Methode zur Bestimmung der Rangfolge der Permutaionen einer Generation
-<<<<<<< HEAD
-	 * Ausgangspunkt f�r rangbasierte Selektion	 *
-	 * @param generation 	urspr�ngliche Generation
-=======
 	 * Ausgangspunkt für angbasierte Selektion
 	 * @param generation 	ursprüngliche Generation
->>>>>>> 1c14d484d89da11c3a3d421562e47e16bfccd5be
 	 * @return Generation	Generation mit entsprechender Rangfolge der Permutaionen
 	 */
 	public static Generation generationOrder(Generation generation) {
 		
-		//Container f�r die Wahrscheinlichkeitswerte der Permutationen
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
 		Double[] presumptions = new Double[generation.getPermutations().size()];
 		
 		int i = 0;		
@@ -133,7 +110,7 @@ public class parentSelection {
 	        }
 	    }
 		
-		//R�ckgabe der ge�nderten Generation
+		//Rückgabe der geänderten Generation
 		return generation;
 	}
 	
