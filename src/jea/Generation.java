@@ -48,10 +48,14 @@ public class Generation {
 	 * calcFitness berechnet die Fitness aller Permutationen 
 	 * 
 	 */
-	public void calcFitness() {
+	public Double calcFitness() {
+		Double fitness = 1.0;
 		for (Permutation permutation : permutations) {
 			permutation.calcFitness();
+			fitness = fitness + permutation.getFitness();
 		}
+		
+		return fitness;
 	}
 
 	/**
@@ -69,7 +73,7 @@ public class Generation {
 		newPermutations.addAll(children.permutations);
 		
 		while (permutationCount < newPermutations.size()) {
-			int worstFitness = Integer.MAX_VALUE;
+			Double worstFitness = Double.MAX_VALUE;
 			int worstPermutation = 0;
 			
 			for(int i = 0; i < newPermutations.size(); i++) {
@@ -94,7 +98,7 @@ public class Generation {
 	 */
 	public Permutation getBestPermutation() {
 		Permutation bestPermutation = null;
-		int bestFitness = Integer.MIN_VALUE;
+		Double bestFitness = Double.MIN_VALUE;
 		for (Permutation permutation : permutations) {
 			if (bestFitness < permutation.getFitness()) {
 				bestPermutation = permutation;
@@ -106,5 +110,9 @@ public class Generation {
 
 	public void setPermutations(Vector<Permutation> newPermutations) {
 		this.permutations = newPermutations;		
+	}
+	
+	public void setPermutation(Permutation newPermutation, int index) {
+		this.permutations.set(index, newPermutation);		
 	}
 }
