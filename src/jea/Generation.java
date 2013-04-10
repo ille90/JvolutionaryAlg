@@ -127,4 +127,16 @@ public class Generation {
 	public void setPermutation(Permutation newPermutation, int index) {
 		this.permutations.set(index, newPermutation);		
 	}
+	public void printGeneration() {
+		for (Permutation permutation : permutations) {
+			System.out.print("\t[");
+			for(int i = 0 ; i < permutation.getGeneCount(); i++) {
+				System.out.print(permutation.getGene(i));
+				if(i != permutation.getGeneCount() - 1)
+					System.out.print(", ");
+			}
+			System.out.println("] " + permutation.getFitness());
+		}
+	}
+
 }
