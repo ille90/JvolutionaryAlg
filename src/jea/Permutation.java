@@ -4,7 +4,7 @@ public class Permutation {
 	
 	private int geneCount;
 	private int[] genes;
-	private int fitness;
+	private Double fitness;
 	
 	public Permutation(int geneCount) {
 		this.geneCount = geneCount;
@@ -67,11 +67,11 @@ public class Permutation {
 		GenePoolSingleton.getInstance().calcFitness(this);
 	}
 	
-	public void setFitness(int fitness) {
+	public void setFitness(Double fitness) {
 		this.fitness = fitness;
 	}
 	
-	public int getFitness() {
+	public Double getFitness() {
 		return fitness;
 	}
 }

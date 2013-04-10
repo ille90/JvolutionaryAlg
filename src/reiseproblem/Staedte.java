@@ -18,8 +18,8 @@ public class Staedte implements GenePool{
 		return costs.size();
 	}
 	
-	private int calcKosten(Permutation permutation) {
-		int costsCount = 0;
+	private Double calcKosten(Permutation permutation) {
+		Double costsCount = 1.0;
 		for (int i = 0; i < geneCount(); i++) {
 			costsCount += costs.get(permutation.getGene(i))[permutation.getGene((i + 1) == geneCount() ? 0 : (i + 1))];
 		}
