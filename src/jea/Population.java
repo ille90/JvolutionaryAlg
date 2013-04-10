@@ -33,41 +33,44 @@ public class Population {
 
 	public void run(determSelectionType type) {
 		while (currentGeneration < maxGeneration) {
-			
+
 			System.out.print((currentGeneration + 1) + ". Generation: ");
 			Generation children = new Generation(childrenCount);
 			int currentChild = 1;
-			
+
 			while (currentChild <= childrenCount) {
+
+				Permutation father = parentSelection.useParentSelection(generation);
+				Permutation mother = parentSelection.useParentSelection(generation);
 				
-				Permutation father = generation.getRandomPermutation();
-				Permutation mother = generation.getRandomPermutation();
-				
+				/*Permutation father = generation.getRandomPermutation();
+				Permutation mother = generation.getRandomPermutation();*/
+
 				while (father == mother)
 					mother = generation.getRandomPermutation();
 				double u = Math.random();
-				
+
 				if (u < limit) {
 					Permutation child = Evolution.recombination(father, mother);
 					child = Evolution.mutation(child);
 					children.addPermutation(child);
 					currentChild++;
-				}				
+				}
 			}
-			
+
 			children.calcFitness();
 			currentGeneration++;
-			
-			if(type == determSelectionType.commaSelection){
+
+			if (type == determSelectionType.commaSelection) {
 				generation = environmentalSelection.determSelection(children);
-			}else{
+			} else {
 				Vector<Permutation> newPermutations = new Vector<Permutation>();
 				newPermutations.addAll(generation.getPermutations());
 				newPermutations.addAll(children.getPermutations());
 				generation.setPermutations(newPermutations);
 				generation = environmentalSelection.determSelection(generation);
 			}
-			
+
 			System.out.println("fertig");
 			generation.printGeneration();
 		}
