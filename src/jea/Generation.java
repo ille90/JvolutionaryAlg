@@ -40,7 +40,7 @@ public class Generation {
 	 */
 	public void fillInitialGeneration() {
 		for (int i = permutations.size(); i < permutationCount; i++) {
-			permutations.add(Permutation.getRandomPermutation(GenePoolSingleton.getInstance().getGenePool().geneCount()));
+			permutations.add(Permutation.getRandomPermutation(EvolutionSingleton.getInstance().getGenePool().geneCount()));
 		}
 	}
 	

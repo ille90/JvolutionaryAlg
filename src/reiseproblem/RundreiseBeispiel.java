@@ -2,9 +2,12 @@ package reiseproblem;
 
 import java.util.HashMap;
 
-import jea.GenePoolSingleton;
+import jea.EvolutionSingleton;
 import jea.Population;
 import jea.determSelectionType;
+import jea.parentSelection;
+import jea.parentSelectionType;
+import jea.presumptionType;
 
 public class RundreiseBeispiel {
 	
@@ -19,13 +22,17 @@ public class RundreiseBeispiel {
 		costs.put(5, new int[] {7, 12, 8, 5, 11, 0});
 		
 		
-		int permutationCount = 5;
-		int maxGeneration = 15;
-		int childrenCount = 15;
-		float limit = 0.5f;
+		int permutationCount = 15;
+		int maxGeneration = 20;
+		int childrenCount = 20;
+		float limit = 0.8f;
 		
 		Staedte staedte = new Staedte(costs);
-		GenePoolSingleton.getInstance().setGenPool(staedte);
+		EvolutionSingleton.getInstance().setGenPool(staedte);
+		EvolutionSingleton.getInstance().setParentSelType(parentSelectionType.qSelection);
+		EvolutionSingleton.getInstance().setPresumptType(presumptionType.fitness);
+		EvolutionSingleton.getInstance().setMemberCount(5);
+		
 		Population population = new Population(permutationCount, maxGeneration, childrenCount, limit);
 		population.init();
 		staedte.printPermutationInfo(population.getBestPermutation());

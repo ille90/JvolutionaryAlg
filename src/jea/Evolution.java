@@ -20,7 +20,7 @@ public class Evolution {
 	 * @return
 	 */
 	public static Permutation mutation(Permutation permutation) {
-		int geneCount = GenePoolSingleton.getInstance().getGenePool().geneCount();
+		int geneCount = EvolutionSingleton.getInstance().getGenePool().geneCount();
 		//Art der Mutation festlegen: 0 = Vertauschung, 1 = Inversion, 2 = keine Veränderung
 		int typ = (int) (Math.random() * 3);
 		Permutation newPermutation = new Permutation(permutation);
@@ -63,7 +63,7 @@ public class Evolution {
 	 * @return
 	 */
 	public static Permutation recombination(Permutation father, Permutation mother) {
-		int geneCount = GenePoolSingleton.getInstance().getGenePool().geneCount();
+		int geneCount = EvolutionSingleton.getInstance().getGenePool().geneCount();
 		int k = 0;
 		int n = geneCount;
 		HashMap<Integer, Vector<Integer>> adjs = new HashMap<Integer, Vector<Integer>>();

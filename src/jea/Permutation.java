@@ -64,7 +64,7 @@ public class Permutation {
 	}
 	
 	public void calcFitness() {
-		GenePoolSingleton.getInstance().calcFitness(this);
+		EvolutionSingleton.getInstance().calcFitness(this);
 	}
 	
 	public void setFitness(Double fitness) {
