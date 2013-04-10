@@ -69,6 +69,7 @@ public class Population {
 			}
 			
 			System.out.println("fertig");
+			generation.printGeneration();
 		}
 	}
 
