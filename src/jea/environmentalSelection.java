@@ -10,7 +10,7 @@ public class environmentalSelection {
 		newPermutations.addAll(generation.getPermutations());
 		
 		while (generation.getPermutationCount() < newPermutations.size()) {
-			int worstFitness = Integer.MAX_VALUE;
+			Double worstFitness = Double.MAX_VALUE;
 			int worstPermutation = 0;
 			
 			for(int i = 0; i < newPermutations.size(); i++) {
@@ -26,16 +26,6 @@ public class environmentalSelection {
 		
 		newGeneration.setPermutations(newPermutations);
 		return newGeneration;
-	}
-	
-	public static Generation probSelection(Generation generation){
-		
-		return generation;
-	}
-
-	public static Generation rouletteSelection(Generation generation){
-	
-		return generation;
 	}
 	
 	public static Generation qSelection(Generation generation){
