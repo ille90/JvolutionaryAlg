@@ -103,6 +103,18 @@ public class Generation {
 		}
 		return bestPermutation;
 	}
+	
+	public int getBestPermutationByIndex() {
+		int bestPermutation = -1;
+		int bestFitness = Integer.MIN_VALUE;
+		for (int i = 0; i < permutations.size(); i++) {
+			if (bestFitness < permutations.get(i).getFitness()) {
+				bestPermutation = i;
+				bestFitness = permutations.get(i).getFitness();
+			}
+		}
+		return bestPermutation;
+	}
 
 	public void setPermutations(Vector<Permutation> newPermutations) {
 		this.permutations = newPermutations;		
