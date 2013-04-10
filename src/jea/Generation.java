@@ -98,7 +98,7 @@ public class Generation {
 	 */
 	public Permutation getBestPermutation() {
 		Permutation bestPermutation = null;
-		Double bestFitness = Double.MIN_VALUE;
+		Double bestFitness = -1 * Double.MAX_VALUE;
 		for (Permutation permutation : permutations) {
 			if (bestFitness < permutation.getFitness()) {
 				bestPermutation = permutation;
@@ -110,7 +110,7 @@ public class Generation {
 	
 	public int getBestPermutationByIndex() {
 		int bestPermutation = -1;
-		int bestFitness = Integer.MIN_VALUE;
+		Double bestFitness = -1 * Double.MAX_VALUE;
 		for (int i = 0; i < permutations.size(); i++) {
 			if (bestFitness < permutations.get(i).getFitness()) {
 				bestPermutation = i;
