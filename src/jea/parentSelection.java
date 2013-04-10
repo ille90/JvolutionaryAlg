@@ -2,49 +2,96 @@ package jea;
 
 import java.util.Vector;
 
+/**
+ * Klasse, welche Methoden für Elternselektion enthält
+ * @author Franziska Staake, Tim Illner
+ *
+ */
 public class parentSelection {
 	
-	private static Double[] fitnessPropSelection(Generation generation){
-		int size = generation.getPermutationCount();
-		Double[] presumptions = new Double[size];
+	/**
+	 * fitnessprobalistische Selektion
+	 * Methode für Bestimmung von Wahrscheinlichkeitswerte
+	 * für die Permutationen
+	 * Ausgangspunkt für probalistische Auswahlverfahren
+	 * @param generation 	ursprüngliche Generation
+	 * @return Double[]		Wahrscheinlichkeitswerte der Permutationen
+	 */
+	private static Double[] fitnessPropSelection(Generation generation) {
+		
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
+		Double[] presumptions = new Double[generation.getPermutations().size()];
+		
+		//Fitness der ursprünglichen Generation
 		Double  generationFitness = generation.calcFitness();
 		int i = 0;
 		
-		for (Permutation permutation : generation.getPermutations()) {	
+		//Bestimmung des Wahrscheinlichkeitswerts einer jeden Permutation
+		for (Permutation permutation : generation.getPermutations()) {
+			
+			//Fitness der Permutation bestimmen
 			permutation.calcFitness();
+			
+			//W-Wert bestimmen
+			//Verhältnis der Fitness des Individuums zur Fitness aller
 			presumptions[i] = permutation.getFitness()/generationFitness;
+			
 			i++;
 		}
 		
+		//Rückgabe des Containers der W-Werte
 		return presumptions;
 	}
 	
-	private static Double[] rankingPropSelection(Generation generation){
-		int size = generation.getPermutationCount();
-		Double[] presumptions = new Double[size];
-		int r = generation.getPermutationCount();
+	/**
+	 * rangbasierte Selektion
+	 * Methode für Bestimmung von Wahrscheinlichkeitswerte
+	 * für die Permutationen
+	 * Ausgangspunkt für probalistische Auswahlverfahren
+	 * @param generation 	ursprüngliche Generation
+	 * @return Double[]		Wahrscheinlichkeitswerte der Permutationen
+	 */
+	private static Double[] rankingPropSelection(Generation generation) {
+		
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
+		Double[] presumptions = new Double[generation.getPermutations().size()];
+		
+		//Anzahl der Individuen der Generation
+		int r = generation.getPermutations().size();
 		
 		//Wahrscheinlichkeitswerte bestimmen
-		for (int i = 0; i < size; i++) {			
+		for (int i = 0; i < generation.getPermutations().size(); i++) {
+			
 			presumptions[i] = (double) 2/r * (1- ((i-1) / (r-1)));
 		}
 		
+		//Rückgabe des Containers der W-Werte
 		return presumptions;
 	}
 	
-	public static Generation generationOrder(Generation generation){
-		int size = generation.getPermutationCount();
-		Double[] presumptions = new Double[size];
+	/**
+	 * Methode zur Bestimmung der Rangfolge der Permutaionen einer Generation
+	 * Ausgangspunkt für rangbasierte Selektion	 *
+	 * @param generation 	ursprüngliche Generation
+	 * @return Generation	Generation mit entsprechender Rangfolge der Permutaionen
+	 */
+	public static Generation generationOrder(Generation generation) {
+		
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
+		Double[] presumptions = new Double[generation.getPermutations().size()];
+		
 		int i = 0;		
 			 
 		//Fitness der einzelnen Individuen bestimmen
-		for (Permutation permutation : generation.getPermutations()) {	
+		for (Permutation permutation : generation.getPermutations()) {
+			
 			permutation.calcFitness();
 			presumptions[i] = permutation.getFitness();
 			i++;
 		}
 		
 		//Generation neu ordnen
+		//Bubblesort
 		for(int y=0; y<presumptions.length-1; y++) {
 	    	
 	        for(int x=0; x<presumptions.length-1; x++) {
@@ -63,29 +110,58 @@ public class parentSelection {
 	        }
 	    }
 		
+		//Rückgabe der geänderten Generation
 		return generation;
 	}
 	
-	//rangabsierte, für das Minimierungsprinzip
-	public static Permutation rouletteSelection(Generation generation, presumptionType type){
-		Double[] presumptions = new Double[generation.getPermutationCount()];
+	/**
+	 * Rouletteselektion
+	 * probalistisches Auswalverfahren
+	 * Auswahl eines Elternteils aus der Menge an Permutaionen einer Generation
+	 * @param generation	ursprüngliche Generation
+	 * @param type			gewähltes probalistisches Selektionsverfahren
+	 * @return Permutation	gewähltes Elternteil
+	 */
+	public static Permutation rouletteSelection(Generation generation, presumptionType type) {
 		
+		//Container für die Wahrscheinlichkeitswerte der Permutationen
+		Double[] presumptions = new Double[generation.getPermutations().size()];
+		
+		//Warscheinlichkeitswert zur Bestimmung des entsprechenden Individuums
 		double z =  Math.random();		
 		double currentValue = 0;
 		
 		//Wahrscheinlichkeitswerte für Permutationen bestimmen
-		if(type == presumptionType.ranking){
+		//Auswahl zwischen den probalistischen Selektionsverfahren
+		
+		if(type == presumptionType.ranking) {
+			//rangbasierte Selektion
+			
 			//1. Permutationen einer Generation in entsprechende RF bringen
 			Generation newGeneration = generationOrder(generation);
+			
 			//2. Array mit Wahrscheinlichkeitswerten
 			presumptions = rankingPropSelection(newGeneration);
+			
 			generation = newGeneration;
+			
 		} else {
+			
+			//fitnessprobalistische Selektion
 			presumptions = fitnessPropSelection(generation);
 		}		
 		
+		//eigentliche Rouletteselektion
 		for(int i = 0; i < presumptions.length; i++) {
+			
+			//Auswahl der Permutation durch Zufall
+			//Anordnung der Permutationen auf einem Rouletterad 
+			//mit untersch. Wahrscheinlichkeiten
+			//zufällige Zahl wird ermittelt (z)
+			//Permutation, in dessem Bereich z liegt, wird gewählt
+			
 			currentValue += presumptions[i];
+			
 			if(currentValue > z)
 				return generation.getPermutation(i);
 		}
