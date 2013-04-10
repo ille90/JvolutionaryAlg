@@ -3,27 +3,27 @@ package jea;
 import java.util.Vector;
 
 /**
- * Klasse, welche Methoden für Umweltselektion enthält
+ * Klasse, welche Methoden fÃ¼r Umweltselektion enthÃ¤lt
  * @author Franziska Staake
  *
  */
 public class environmentalSelection {
 	
 	/**
-	 * Methode für deterministische Selektion
+	 * Methode fÃ¼r deterministische Selektion
 	 * @param generation	Generation, deren Permutationen selektiert werden sollen
 	 * @return Generation 	mit selektierten Individuen (Permutationen)
 	 */
 	public static Generation determSelection(Generation generation){
 		
 		//neue Generation mit gleicher Anzahl an Permutationen
-		//wie ursprüngliche Generation
+		//wie ursprÃ¼ngliche Generation
 		Generation newGeneration = new Generation(generation.getPermutationCount());
 		
-		//Container für selektierte Permutationen
+		//Container fÃ¼r selektierte Permutationen
 		Vector<Permutation> newPermutations = new Vector<Permutation>();
 		
-		//ursprüngliche Perms werden dem Container übergeben für Selektion
+		//ursprÃ¼ngliche Perms werden dem Container Ã¼bergeben fÃ¼r Selektion
 		newPermutations.addAll(generation.getPermutations());
 		
 		//Selektion
@@ -47,7 +47,7 @@ public class environmentalSelection {
 			newPermutations.remove(worstPermutation);
 		}
 		
-		//Permutaionen der neuen Generation zuweisen und zurückgeben 
+		//Permutaionen der neuen Generation zuweisen und zurÃ¼ckgeben 
 		newGeneration.setPermutations(newPermutations);
 		return newGeneration;
 	}	
