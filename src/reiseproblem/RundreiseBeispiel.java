@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import jea.EvolutionSingleton;
 import jea.FitnessSelectionType;
+import jea.GenePool;
+import jea.JythonFactory;
 import jea.Population;
 import jea.DetermSelectionType;
 import jea.ParentSelection;
@@ -13,7 +15,7 @@ import jea.PresumptionType;
 public class RundreiseBeispiel {
 	
 	public static void main(String[] args) {
-		DetermSelectionType type = DetermSelectionType.commaSelection;
+		DetermSelectionType type = DetermSelectionType.plusSelection;
 		HashMap<Integer, int[]> costs = new HashMap<Integer, int[]>();
 		costs.put(0, new int[] {0, 5, 8, 11, 4, 7});	
 		costs.put(1, new int[] {5, 0, 10, 4, 9, 12});
@@ -29,7 +31,8 @@ public class RundreiseBeispiel {
 		float limit = 0.8f;
 		
 		Staedte staedte = new Staedte(costs);
-		EvolutionSingleton.getInstance().setGenPool(staedte);
+		GenePool genePool = JythonFactory.getJythonGenePool("/home/johannes/projects/JvolutionaryAlg/Staedte.py"); 
+		EvolutionSingleton.getInstance().setGenPool(genePool);
 		EvolutionSingleton.getInstance().setFitnessSelType(FitnessSelectionType.Lowest);
 		EvolutionSingleton.getInstance().setParentSelType(ParentSelectionType.multibleQSelection);
 		EvolutionSingleton.getInstance().setPresumptType(PresumptionType.ranking);
