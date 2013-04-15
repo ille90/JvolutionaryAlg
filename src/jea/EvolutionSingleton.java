@@ -4,13 +4,16 @@ public class EvolutionSingleton {
 	
 	private GenePool genePool;
 	
-	private parentSelectionType parentSelType;
-	private presumptionType presumptType;
+	private FitnessSelectionType fitnessSelType;
+	
+	private ParentSelectionType parentSelType;
+	private PresumptionType presumptType;
 	private int memberCount;
 	
 	private static EvolutionSingleton instance;
 	
 	private EvolutionSingleton() {
+		fitnessSelType = FitnessSelectionType.Highest;
 		parentSelType = parentSelType.rouletteSelection;
 		presumptType = presumptType.ranking;
 		memberCount = 5;
@@ -34,19 +37,27 @@ public class EvolutionSingleton {
 		genePool.calcFitness(permutation);
 	}
 	
-	public parentSelectionType getParentSelType() {
+	public FitnessSelectionType getFitnessSelType() {
+		return fitnessSelType;
+	}
+	
+	public void setFitnessSelType(FitnessSelectionType fitnessSelType) {
+		this.fitnessSelType = fitnessSelType;
+	}
+	
+	public ParentSelectionType getParentSelType() {
 		return parentSelType;
 	}
 	
-	public void setParentSelType(parentSelectionType parentSelType) {
+	public void setParentSelType(ParentSelectionType parentSelType) {
 		this.parentSelType = parentSelType;
 	}
 	
-	public presumptionType getPresumptType() {
+	public PresumptionType getPresumptType() {
 		return presumptType;
 	}
 	
-	public void setPresumptType(presumptionType presumptType) {
+	public void setPresumptType(PresumptionType presumptType) {
 		this.presumptType = presumptType;
 	}
 	

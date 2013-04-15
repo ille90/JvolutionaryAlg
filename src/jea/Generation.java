@@ -77,10 +77,16 @@ public class Generation {
 			int worstPermutation = 0;
 			
 			for(int i = 0; i < newPermutations.size(); i++) {
-				
-				if(worstFitness > newPermutations.get(i).getFitness()) {
-					worstFitness = newPermutations.get(i).getFitness();
-					worstPermutation = i;
+				if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest) {
+					if(worstFitness > newPermutations.get(i).getFitness()) {
+						worstFitness = newPermutations.get(i).getFitness();
+						worstPermutation = i;
+					}
+				} else {
+					if(worstFitness < newPermutations.get(i).getFitness()) {
+						worstFitness = newPermutations.get(i).getFitness();
+						worstPermutation = i;
+					}
 				}
 			}
 			
@@ -98,11 +104,19 @@ public class Generation {
 	 */
 	public Permutation getBestPermutation() {
 		Permutation bestPermutation = null;
-		Double bestFitness = -1 * Double.MAX_VALUE;
+		Double bestFitness = Double.MAX_VALUE;
+		if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest)
+			bestFitness = -1 * Double.MAX_VALUE;
 		for (Permutation permutation : permutations) {
-			if (bestFitness < permutation.getFitness()) {
-				bestPermutation = permutation;
-				bestFitness = permutation.getFitness();
+			if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest) {
+				if (bestFitness < permutation.getFitness()) {
+					bestPermutation = permutation;bestFitness = permutation.getFitness();
+				}
+			} else {
+				if (bestFitness > permutation.getFitness()) {
+					bestPermutation = permutation;
+					bestFitness = permutation.getFitness();
+				}
 			}
 		}
 		return bestPermutation;
@@ -110,11 +124,24 @@ public class Generation {
 	
 	public int getBestPermutationByIndex() {
 		int bestPermutation = -1;
-		Double bestFitness = -1 * Double.MAX_VALUE;
+		Double bestFitness = Double.MAX_VALUE;
+		if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest)
+			bestFitness = -1 * Double.MAX_VALUE;
 		for (int i = 0; i < permutations.size(); i++) {
 			if (bestFitness < permutations.get(i).getFitness()) {
 				bestPermutation = i;
 				bestFitness = permutations.get(i).getFitness();
+			}
+			if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest) {
+				if (bestFitness < permutations.get(i).getFitness()) {
+					bestPermutation = i;
+					bestFitness = permutations.get(i).getFitness();
+				}
+			} else {
+				if (bestFitness > permutations.get(i).getFitness()) {
+					bestPermutation = i;
+					bestFitness = permutations.get(i).getFitness();
+				}
 			}
 		}
 		return bestPermutation;

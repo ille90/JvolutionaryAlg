@@ -6,7 +6,7 @@ package jea;
  * @author Franziska Staake
  *
  */
-public enum presumptionType {
+public enum PresumptionType {
 	/**
 	 * Fitnessprobalistische Selektion
 	 * für Maximierungsprobleme

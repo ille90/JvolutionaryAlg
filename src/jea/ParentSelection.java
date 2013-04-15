@@ -8,7 +8,7 @@ import java.util.Vector;
  * @author Franziska Staake, Tim Illner
  * 
  */
-public class parentSelection {
+public class ParentSelection {
 
 	/**
 	 * fitnessprobalistische Selektion Methode für Bestimmung von
@@ -102,7 +102,8 @@ public class parentSelection {
 
 			for (int x = 0; x < presumptions.length - 1; x++) {
 
-				if (presumptions[x] > presumptions[x + 1]) {
+				if ((EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest && presumptions[x] > presumptions[x + 1]) ||
+						(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Lowest && presumptions[x] < presumptions[x + 1])) {
 
 					Double t = presumptions[x];
 					Permutation u = generation.getPermutation(x);
@@ -132,7 +133,7 @@ public class parentSelection {
 	 * @return Permutation gewähltes Elternteil
 	 */
 	public static Permutation rouletteSelection(Generation generation,
-			presumptionType type) {
+			PresumptionType type) {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
 		Double[] presumptions = new Double[generation.getPermutations().size()];
@@ -143,7 +144,7 @@ public class parentSelection {
 
 		// Auswahl zwischen den probalistischen Selektionsverfahren
 
-		if (type == presumptionType.ranking) {
+		if (type == PresumptionType.ranking) {
 			// rangbasierte Selektion
 
 			// 1. Permutationen einer Generation in entsprechende RF bringen

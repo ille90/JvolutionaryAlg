@@ -5,7 +5,7 @@ package jea;
  * @author Franziska Staake
  *
  */
-public enum parentSelectionType { 
+public enum ParentSelectionType { 
 	/**
 	 * Rouletteselektion
 	 * gehört zur probalistischen Selektion (nach Zufall)

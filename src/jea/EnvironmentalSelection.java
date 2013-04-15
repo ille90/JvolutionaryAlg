@@ -7,7 +7,7 @@ import java.util.Vector;
  * @author Franziska Staake
  *
  */
-public class environmentalSelection {
+public class EnvironmentalSelection {
 	
 	/**
 	 * Methode für deterministische Selektion
@@ -31,15 +31,24 @@ public class environmentalSelection {
 		while (generation.getPermutationCount() < newPermutations.size()) {
 			
 			Double worstFitness = Double.MAX_VALUE;
+			if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Lowest)
+				worstFitness = -1 * Double.MAX_VALUE;
 			int worstPermutation = 0;
 			
 			//alle Permutationen miteinander vergleichen
 			for(int i = 0; i < newPermutations.size(); i++) {
 				
-				if(worstFitness > newPermutations.get(i).getFitness()) {
+				if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest) {
+					if(worstFitness > newPermutations.get(i).getFitness()) {
+						worstFitness = newPermutations.get(i).getFitness();
+						worstPermutation = i;
+					}
+				} else {
+					if(worstFitness < newPermutations.get(i).getFitness()) {
+						worstFitness = newPermutations.get(i).getFitness();
+						worstPermutation = i;
+					}
 					
-					worstFitness = newPermutations.get(i).getFitness();
-					worstPermutation = i;
 				}
 			}
 			

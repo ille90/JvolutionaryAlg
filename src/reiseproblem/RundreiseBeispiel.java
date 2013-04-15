@@ -3,16 +3,17 @@ package reiseproblem;
 import java.util.HashMap;
 
 import jea.EvolutionSingleton;
+import jea.FitnessSelectionType;
 import jea.Population;
-import jea.determSelectionType;
-import jea.parentSelection;
-import jea.parentSelectionType;
-import jea.presumptionType;
+import jea.DetermSelectionType;
+import jea.ParentSelection;
+import jea.ParentSelectionType;
+import jea.PresumptionType;
 
 public class RundreiseBeispiel {
 	
 	public static void main(String[] args) {
-		determSelectionType type = determSelectionType.plusSelection;
+		DetermSelectionType type = DetermSelectionType.commaSelection;
 		HashMap<Integer, int[]> costs = new HashMap<Integer, int[]>();
 		costs.put(0, new int[] {0, 5, 8, 11, 4, 7});	
 		costs.put(1, new int[] {5, 0, 10, 4, 9, 12});
@@ -29,8 +30,9 @@ public class RundreiseBeispiel {
 		
 		Staedte staedte = new Staedte(costs);
 		EvolutionSingleton.getInstance().setGenPool(staedte);
-		EvolutionSingleton.getInstance().setParentSelType(parentSelectionType.qSelection);
-		EvolutionSingleton.getInstance().setPresumptType(presumptionType.fitness);
+		EvolutionSingleton.getInstance().setFitnessSelType(FitnessSelectionType.Lowest);
+		EvolutionSingleton.getInstance().setParentSelType(ParentSelectionType.multibleQSelection);
+		EvolutionSingleton.getInstance().setPresumptType(PresumptionType.ranking);
 		EvolutionSingleton.getInstance().setMemberCount(5);
 		
 		Population population = new Population(permutationCount, maxGeneration, childrenCount, limit);

@@ -31,7 +31,7 @@ public class Population {
 		generation.calcFitness();
 	}
 
-	public void run(determSelectionType type) {
+	public void run(DetermSelectionType type) {
 		while (currentGeneration < maxGeneration) {
 
 			System.out.print((currentGeneration + 1) + ". Generation: ");
@@ -40,8 +40,8 @@ public class Population {
 
 			while (currentChild <= childrenCount) {
 
-				Permutation father = parentSelection.useParentSelection(generation);
-				Permutation mother = parentSelection.useParentSelection(generation);
+				Permutation father = ParentSelection.useParentSelection(generation);
+				Permutation mother = ParentSelection.useParentSelection(generation);
 				
 				/*Permutation father = generation.getRandomPermutation();
 				Permutation mother = generation.getRandomPermutation();*/
@@ -61,14 +61,14 @@ public class Population {
 			children.calcFitness();
 			currentGeneration++;
 
-			if (type == determSelectionType.commaSelection) {
-				generation = environmentalSelection.determSelection(children);
+			if (type == DetermSelectionType.commaSelection) {
+				generation = EnvironmentalSelection.determSelection(children);
 			} else {
 				Vector<Permutation> newPermutations = new Vector<Permutation>();
 				newPermutations.addAll(generation.getPermutations());
 				newPermutations.addAll(children.getPermutations());
 				generation.setPermutations(newPermutations);
-				generation = environmentalSelection.determSelection(generation);
+				generation = EnvironmentalSelection.determSelection(generation);
 			}
 
 			System.out.println("fertig");

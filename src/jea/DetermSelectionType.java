@@ -5,7 +5,7 @@ package jea;
  * @author Franziska Staake
  *
  */
-public enum determSelectionType {
+public enum DetermSelectionType {
 	/**
 	 * Kommaselektion (nur aus Kindern gewählt)
 	 */

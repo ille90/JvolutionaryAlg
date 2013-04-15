@@ -28,7 +28,7 @@ public class Staedte implements GenePool{
 
 	@Override
 	public void calcFitness(Permutation permutation) {
-		permutation.setFitness(calcKosten(permutation) * -1);
+		permutation.setFitness(calcKosten(permutation));
 	}
 	
 	public void printPermutationInfo(Permutation permutation) {
