@@ -38,8 +38,6 @@ public class RundreiseBeispiel {
 		staedte.printPermutationInfo(population.getBestPermutation());
 		population.run(type);
 		staedte.printPermutationInfo(population.getBestPermutation());
-		double z = (int) (Math.random() * 2);
-		System.out.println(z);
 	}
 
 }

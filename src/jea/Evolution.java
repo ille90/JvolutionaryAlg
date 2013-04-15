@@ -83,6 +83,23 @@ public class Evolution {
 		return permutation;		
 	}
 	
+	public static Permutation realMutation(Permutation permutation) {
+		
+		int z = getRandomNr();
+		int x = getRandomNr();
+		
+		//P = 50 %
+		if(z < x) {
+			
+			for(int i = 0; i < permutation.getGeneCount(); i++) {
+			
+				permutation.setGene(i, permutation.getGene(i) + z);
+			}
+		}		
+		
+		return permutation;		
+	}
+	
 	public static int getRandomNr() {
 		
 		return (int) (Math.random() * 10);
