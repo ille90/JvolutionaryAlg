@@ -27,7 +27,7 @@ public class RundreiseBeispiel {
 		int maxGeneration = 20;
 		int childrenCount = 20;
 		float limit = 0.8f;
-		
+			
 		Staedte staedte = new Staedte(costs);
 		EvolutionSingleton.getInstance().setGenPool(staedte);
 		EvolutionSingleton.getInstance().setFitnessSelType(FitnessSelectionType.Lowest);
@@ -40,6 +40,8 @@ public class RundreiseBeispiel {
 		staedte.printPermutationInfo(population.getBestPermutation());
 		population.run(type);
 		staedte.printPermutationInfo(population.getBestPermutation());
+		double z = (int) (Math.random() * 2);
+		System.out.println(z);
 	}
 
 }

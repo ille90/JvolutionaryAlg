@@ -28,16 +28,24 @@ public class Evolution {
 			//Zwei zufällige ungleiche Genpositionen auswählen
 			int geneOne = (int) (Math.random() * geneCount);
 			int geneTwo = (int) (Math.random() * geneCount);
+			
 			while (geneOne == geneTwo) {
+				
 				geneTwo = (int) (Math.random() * geneCount);
 			}
+			
 			if (0 == typ) {
+				
 				//Vertauschung
 				newPermutation.setGene(geneOne, permutation.getGene(geneTwo));
 				newPermutation.setGene(geneTwo, permutation.getGene(geneOne));
+				
 			} else {
+				
 				//Inversion
+				
 				if(geneOne > geneTwo) {
+					
 					//sortieren
 					int i = geneTwo;
 					geneTwo = geneOne;
@@ -45,13 +53,56 @@ public class Evolution {
 				}
 				
 				int j = ((geneTwo - geneOne + 1) / 2) - 1;
+				
 				for(int i = 0; i <= j; i++) {
+					
 					newPermutation.setGene(geneOne + i, permutation.getGene(geneTwo - i));
 					newPermutation.setGene(geneTwo - i, permutation.getGene(geneOne + i));
 				}
 			}
 		}
+		
 		return newPermutation;
+	}
+	
+	public static Permutation binaryMutation(Permutation permutation) {
+		
+		//Zufallszahl
+		int z = 0;
+		
+		while(z > permutation.getGeneCount()) {
+			z = getRandomNr();
+		}		
+		
+		if (permutation.getGene(z) == 0) {
+			permutation.setGene(z, 1);
+		} else {
+			permutation.setGene(z, 0);
+		}			
+		
+		return permutation;		
+	}
+
+	public static Permutation realMutation(Permutation permutation) {
+		
+		int z = getRandomNr();
+		int x = getRandomNr();
+		
+		//P = 50 %
+		if(z < x) {
+			
+			for(int i = 0; i < permutation.getGeneCount(); i++) {
+			
+				permutation.setGene(i, permutation.getGene(i) + z);
+			}
+		}		
+		
+		return permutation;		
+	}
+	
+	public static int getRandomNr() {
+		
+		return (int) (Math.random() * 10);
 	}
 	
 	/**
@@ -111,6 +162,67 @@ public class Evolution {
 		}
 		
 		return child;
+	}
+	
+	public static Permutation[] binaryRecombination(Permutation father, Permutation mother) {
+		
+		Permutation[] children = new Permutation[2];
+		int geneCount = EvolutionSingleton.getInstance().getGenePool().geneCount();
+		
+		
+		//Art der Rekombination festlegen:
+		//0 = 1-Pkt-Rekombi, 1 = 2-Pkt-Rekombi
+		int typ = (int) (Math.random() * 2);
+		
+		int geneOne = 0;
+		int geneTwo = 0;		
+		
+		do {			
+			geneOne = getRandomNr();
+			
+		} while(geneOne > father.getGeneCount());
+		
+			
+		//1-Pkt-Rekombi
+		if(typ == 0) {
+			
+			geneTwo = father.getGeneCount();
+			
+			children = changeGenes(geneOne, geneTwo, father, mother);			
+		
+		//2-Pkt-Rekombi
+		} else {
+			
+			do {				
+				geneTwo = getRandomNr();
+				
+			} while(geneTwo > father.getGeneCount() || geneTwo >= geneOne);
+			
+			children = changeGenes(geneOne, geneTwo, father, mother);
+		}
+		
+		return children;		
+	}
+	
+	public static Permutation[] changeGenes(int geneOne, int geneTwo,
+			Permutation father, Permutation mother) {
+		
+		Permutation[] children = new Permutation[2];		
+		
+		Permutation child1 = new Permutation(father);
+		Permutation child2 = new Permutation(mother);
+				
+		for(int i = geneOne; i <= geneTwo; i++) {
+			
+			child1.setGene(i, father.getGene(i));
+			child2.setGene(i, mother.getGene(i));
+		}
+		
+		children[0] = child1;
+		children[1] = child2;
+		
+		return children;
+		
 	}
 	
 	/**
