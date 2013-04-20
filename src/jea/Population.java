@@ -2,6 +2,8 @@ package jea;
 
 import java.util.Vector;
 
+import org.jfree.data.xy.XYSeries;
+
 public class Population {
 
 	int currentGeneration;
@@ -10,6 +12,7 @@ public class Population {
 	Generation generation;
 	int childrenCount;
 	float limit;
+	XYSeries benchmarkData;
 
 	public Population(int permutationCount, int maxGeneration,
 			int childrenCount, float limit) {
@@ -26,9 +29,10 @@ public class Population {
 
 	public void init() {
 		currentGeneration = 0;
+		benchmarkData = new XYSeries("Test");
 		generation = new Generation(permutationCount);
 		generation.fillInitialGeneration();
-		generation.calcFitness();
+		generation.calcFitness();		
 	}
 
 	public void run(DetermSelectionType type) {
@@ -59,7 +63,6 @@ public class Population {
 			}
 
 			children.calcFitness();
-			currentGeneration++;
 
 			if (type == DetermSelectionType.commaSelection) {
 				generation = EnvironmentalSelection.determSelection(children);
@@ -72,11 +75,22 @@ public class Population {
 			}
 
 			System.out.println("fertig");
+			
+			
+			
+			currentGeneration++;
+			benchmarkData.add((double) currentGeneration, generation.calcFitnessAverage());
+			
 			generation.printGeneration();
 		}
 	}
 
 	public Permutation getBestPermutation() {
 		return generation.getBestPermutation();
+	}
+	
+	public XYSeries getBenchmarkData() {
+		
+		return this.benchmarkData;
 	}
 }

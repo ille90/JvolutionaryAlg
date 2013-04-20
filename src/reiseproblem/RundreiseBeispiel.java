@@ -23,15 +23,15 @@ public class RundreiseBeispiel {
 		costs.put(5, new int[] {7, 12, 8, 5, 11, 0});
 		
 		
-		int permutationCount = 15;
-		int maxGeneration = 20;
-		int childrenCount = 20;
+		int permutationCount = 50;
+		int maxGeneration = 50;
+		int childrenCount = 70;
 		float limit = 0.8f;
 			
 		Staedte staedte = new Staedte(costs);
 		EvolutionSingleton.getInstance().setGenPool(staedte);
 		EvolutionSingleton.getInstance().setFitnessSelType(FitnessSelectionType.Lowest);
-		EvolutionSingleton.getInstance().setParentSelType(ParentSelectionType.multibleQSelection);
+		EvolutionSingleton.getInstance().setParentSelType(ParentSelectionType.rouletteSelection);
 		EvolutionSingleton.getInstance().setPresumptType(PresumptionType.ranking);
 		EvolutionSingleton.getInstance().setMemberCount(5);
 		
@@ -39,9 +39,8 @@ public class RundreiseBeispiel {
 		population.init();
 		staedte.printPermutationInfo(population.getBestPermutation());
 		population.run(type);
-		staedte.printPermutationInfo(population.getBestPermutation());
-		double z = (int) (Math.random() * 2);
-		System.out.println(z);
+		staedte.printPermutationInfo(population.getBestPermutation());		
+		staedte.printBenchmark(population);
 	}
 
 }

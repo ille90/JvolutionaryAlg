@@ -49,13 +49,23 @@ public class Generation {
 	 * 
 	 */
 	public Double calcFitness() {
-		Double fitness = 1.0;
+		Double fitness = 0.0;
 		for (Permutation permutation : permutations) {
 			permutation.calcFitness();
 			fitness = fitness + permutation.getFitness();
 		}
 		
 		return fitness;
+	}
+	
+	public Number calcFitnessAverage() {
+		Double fitness = 0.0;
+		for (Permutation permutation : permutations) {
+			permutation.calcFitness();
+			fitness = fitness + permutation.getFitness();
+		}
+				
+		return fitness/permutations.size();
 	}
 
 	/**

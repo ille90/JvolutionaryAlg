@@ -2,8 +2,13 @@ package reiseproblem;
 
 import java.util.HashMap;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import jea.GenePool;
 import jea.Permutation;
+import jea.Population;
+import jea.XYSeriesChart;
 
 public class Staedte implements GenePool{
 	
@@ -40,5 +45,17 @@ public class Staedte implements GenePool{
 		
 		System.out.println("Städtefolge: " + staedtefolge);
 		System.out.println("Kosten: " + calcKosten(permutation));
+	}
+
+	public void printBenchmark(Population population) {
+		
+		XYSeriesChart benchmarkChart = new XYSeriesChart("Dia");	
+		
+		JPanel panel = benchmarkChart.getPanel(population.getBenchmarkData());
+		
+		JFrame frame = new JFrame();
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.pack();
 	}
 }
