@@ -10,6 +10,10 @@ public class EvolutionSingleton {
 	private PresumptionType presumptType;
 	private int memberCount;
 	
+	private double lowestValue;
+	private double heighestValue;
+	private int chainLength;
+	
 	private static EvolutionSingleton instance;
 	
 	private EvolutionSingleton() {
@@ -67,5 +71,29 @@ public class EvolutionSingleton {
 	
 	public void setMemberCount(int memberCount) {
 		this.memberCount = memberCount;
+	}
+	
+	public double getLowestValue() {
+		return lowestValue;
+	}
+	
+	public void setLowestValue(double lowestValue) {
+		this.lowestValue = lowestValue;
+	}
+	
+	public double getHeighestValue() {
+		return heighestValue;
+	}
+	
+	public void setHeighestValue(double heighestValue) {
+		this.heighestValue = heighestValue;
+	}
+	
+	public int getChainLength() {
+		return chainLength;
+	}
+	
+	public void setChainLength(int chainLength) {
+		this.chainLength = chainLength;
 	}
 }
