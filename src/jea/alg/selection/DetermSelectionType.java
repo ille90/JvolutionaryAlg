@@ -1,4 +1,4 @@
-package jea;
+package jea.alg.selection;
 
 /**
  * Enumeration für die Wahl des Deterministischen Selektionstyps

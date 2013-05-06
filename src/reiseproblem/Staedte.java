@@ -2,10 +2,10 @@ package reiseproblem;
 
 import java.util.HashMap;
 
-import jea.GenePool;
-import jea.Permutation;
+import jea.alg.FitnessFunction;
+import jea.alg.Permutation;
 
-public class Staedte implements GenePool{
+public class Staedte implements FitnessFunction{
 	
 	HashMap<Integer, int[]> costs;
 	
@@ -13,16 +13,15 @@ public class Staedte implements GenePool{
 		this.costs = costs;
 	}
 	
-	@Override
 	public int geneCount() {
 		return costs.size();
 	}
 	
 	private Double calcKosten(Permutation permutation) {
 		Double costsCount = 0.0;
-		for (int i = 0; i < geneCount(); i++) {
+		/*for (int i = 0; i < geneCount(); i++) {
 			costsCount += costs.get(permutation.getGene(i))[permutation.getGene((i + 1) == geneCount() ? 0 : (i + 1))];
-		}
+		}*/
 		return costsCount;
 	}
 

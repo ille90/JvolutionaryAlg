@@ -1,4 +1,4 @@
-package jea.coding.binary;
+package jea.alg.coding.binary;
 
 public class Bit {
 	public static int ZERO = 0;
@@ -8,6 +8,10 @@ public class Bit {
 	
 	public Bit() {
 		isOne = false;
+	}
+	
+	public Bit(boolean isOne) {
+		this.isOne = isOne;
 	}
 	
 	public void setZero() {

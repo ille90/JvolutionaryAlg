@@ -1,6 +1,11 @@
-package jea;
+package jea.alg;
 
 import java.util.Vector;
+
+import jea.alg.coding.Coding;
+import jea.alg.selection.DetermSelectionType;
+import jea.alg.selection.EnvironmentalSelection;
+import jea.alg.selection.ParentSelection;
 
 public class Population {
 
@@ -10,6 +15,7 @@ public class Population {
 	Generation generation;
 	int childrenCount;
 	float limit;
+	Coding coding;
 
 	public Population(int permutationCount, int maxGeneration,
 			int childrenCount, float limit) {
@@ -40,21 +46,30 @@ public class Population {
 
 			while (currentChild <= childrenCount) {
 
-				Permutation father = ParentSelection.useParentSelection(generation);
-				Permutation mother = ParentSelection.useParentSelection(generation);
-				
-				/*Permutation father = generation.getRandomPermutation();
-				Permutation mother = generation.getRandomPermutation();*/
+				Permutation father = ParentSelection
+						.useParentSelection(generation);
+				Permutation mother = ParentSelection
+						.useParentSelection(generation);
+
+				/*
+				 * Permutation father = generation.getRandomPermutation();
+				 * Permutation mother = generation.getRandomPermutation();
+				 */
 
 				while (father == mother)
 					mother = generation.getRandomPermutation();
 				double u = Math.random();
 
 				if (u < limit) {
-					Permutation child = Evolution.recombination(father, mother);
-					child = Evolution.mutation(child);
-					children.addPermutation(child);
-					currentChild++;
+					Permutation[] tmpChildren = EvolutionSingleton
+							.getInstance().getCoding()
+							.recombination(father, mother);
+					for (Permutation child : tmpChildren) {
+						EvolutionSingleton.getInstance().getCoding()
+								.mutation(child);
+						children.addPermutation(child);
+						currentChild++;
+					}
 				}
 			}
 

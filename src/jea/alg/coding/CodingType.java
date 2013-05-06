@@ -1,4 +1,4 @@
-package jea.coding;
+package jea.alg.coding;
 
 public enum CodingType {
 	real, binary;

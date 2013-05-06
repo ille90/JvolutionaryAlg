@@ -1,6 +1,10 @@
-package jea;
+package jea.alg.selection;
 
 import java.util.Vector;
+
+import jea.alg.EvolutionSingleton;
+import jea.alg.Generation;
+import jea.alg.Permutation;
 
 /**
  * Klasse, welche Methoden für Elternselektion enthält

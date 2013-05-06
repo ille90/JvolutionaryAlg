@@ -2,13 +2,13 @@ package reiseproblem;
 
 import java.util.HashMap;
 
-import jea.EvolutionSingleton;
-import jea.FitnessSelectionType;
-import jea.Population;
-import jea.DetermSelectionType;
-import jea.ParentSelection;
-import jea.ParentSelectionType;
-import jea.PresumptionType;
+import jea.alg.EvolutionSingleton;
+import jea.alg.Population;
+import jea.alg.selection.DetermSelectionType;
+import jea.alg.selection.FitnessSelectionType;
+import jea.alg.selection.ParentSelection;
+import jea.alg.selection.ParentSelectionType;
+import jea.alg.selection.PresumptionType;
 
 public class RundreiseBeispiel {
 	
@@ -29,7 +29,7 @@ public class RundreiseBeispiel {
 		float limit = 0.8f;
 			
 		Staedte staedte = new Staedte(costs);
-		EvolutionSingleton.getInstance().setGenPool(staedte);
+		EvolutionSingleton.getInstance().setFitnessFunction(staedte);
 		EvolutionSingleton.getInstance().setFitnessSelType(FitnessSelectionType.Lowest);
 		EvolutionSingleton.getInstance().setParentSelType(ParentSelectionType.multibleQSelection);
 		EvolutionSingleton.getInstance().setPresumptType(PresumptionType.ranking);
