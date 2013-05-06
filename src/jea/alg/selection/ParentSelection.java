@@ -1,5 +1,6 @@
 package jea.alg.selection;
 
+import java.util.Random;
 import java.util.Vector;
 
 import jea.alg.EvolutionSingleton;
@@ -23,13 +24,13 @@ public class ParentSelection {
 	 *            ursprüngliche Generation
 	 * @return Double[] Wahrscheinlichkeitswerte der Permutationen
 	 */
-	private static Double[] fitnessPropSelection(Generation generation) {
+	private static double[] fitnessPropSelection(Generation generation) {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		Double[] presumptions = new Double[generation.getPermutations().size()];
+		double[] presumptions = new double[generation.getPermutations().size()];
 
 		// Fitness der ursprünglichen Generation
-		Double generationFitness = generation.calcFitness();
+		double generationFitness = generation.calcFitness();
 		int i = 0;
 
 		// Bestimmung des Wahrscheinlichkeitswerts einer jeden Permutation
@@ -58,10 +59,10 @@ public class ParentSelection {
 	 *            ursprüngliche Generation
 	 * @return Double[] Wahrscheinlichkeitswerte der Permutationen
 	 */
-	private static Double[] rankingPropSelection(Generation generation) {
+	private static double[] rankingPropSelection(Generation generation) {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		Double[] presumptions = new Double[generation.getPermutations().size()];
+		double[] presumptions = new double[generation.getPermutations().size()];
 
 		// Anzahl der Individuen der Generation
 		int r = generation.getPermutations().size();
@@ -88,7 +89,7 @@ public class ParentSelection {
 	public static Generation generationOrder(Generation generation) {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		Double[] presumptions = new Double[generation.getPermutations().size()];
+		double[] presumptions = new double[generation.getPermutations().size()];
 
 		int i = 0;
 
@@ -109,7 +110,7 @@ public class ParentSelection {
 				if ((EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest && presumptions[x] > presumptions[x + 1]) ||
 						(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Lowest && presumptions[x] < presumptions[x + 1])) {
 
-					Double t = presumptions[x];
+					double t = presumptions[x];
 					Permutation u = generation.getPermutation(x);
 
 					presumptions[x] = presumptions[x + 1];
@@ -140,10 +141,10 @@ public class ParentSelection {
 			PresumptionType type) {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		Double[] presumptions = new Double[generation.getPermutations().size()];
+		double[] presumptions = new double[generation.getPermutations().size()];
 
 		// Warscheinlichkeitswert zur Bestimmung des entsprechenden Individuums
-		double z = Math.random();
+		double z = new Random().nextDouble();
 		double currentValue = 0;
 
 		// Auswahl zwischen den probalistischen Selektionsverfahren
@@ -187,12 +188,12 @@ public class ParentSelection {
 			int participantCount) {
 
 		Generation participants = new Generation(
-				(participantCount < generation.getPermutationCount()) ? participantCount
-						: generation.getPermutationCount());
+				(participantCount < generation.getMaxPermutationCount()) ? participantCount
+						: generation.getMaxPermutationCount());
 		Vector<Integer> indices = new Vector<Integer>();
 		int i = 0;
-		while (i < participants.getPermutationCount()) {
-			int j = (int) (Math.random() * generation.getPermutationCount());
+		while (i < participants.getMaxPermutationCount()) {
+			int j = (int) (new Random().nextDouble() * generation.getMaxPermutationCount());
 			if (!indices.contains(j)) {
 				participants.addPermutation(generation.getPermutation(j));
 				i++;
@@ -204,19 +205,19 @@ public class ParentSelection {
 
 	public static Permutation multibleQSelection(Generation generation,
 			int participantCount) {
-		int[] points = new int[generation.getPermutationCount()];
-		for (int n = 0; n < generation.getPermutationCount(); n++) {
+		int[] points = new int[generation.getMaxPermutationCount()];
+		for (int n = 0; n < generation.getMaxPermutationCount(); n++) {
 			Generation participants = new Generation(
-					((participantCount + 1) < generation.getPermutationCount()) ? (participantCount + 1)
-							: generation.getPermutationCount());
+					((participantCount + 1) < generation.getMaxPermutationCount()) ? (participantCount + 1)
+							: generation.getMaxPermutationCount());
 			Vector<Integer> indices = new Vector<Integer>();
 
 			participants.addPermutation(generation.getPermutation(n));
 			indices.add(n);
 
 			int i = 0;
-			while (i < participants.getPermutationCount()) {
-				int j = (int) (Math.random() * generation.getPermutationCount());
+			while (i < participants.getMaxPermutationCount()) {
+				int j = (int) (new Random().nextDouble() * generation.getMaxPermutationCount());
 				if (!indices.contains(j)) {
 					participants.addPermutation(generation.getPermutation(j));
 					indices.add(j);

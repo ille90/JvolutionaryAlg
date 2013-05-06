@@ -1,5 +1,6 @@
 package jea.alg;
 
+import java.util.Random;
 import java.util.Vector;
 
 import jea.alg.selection.FitnessSelectionType;
@@ -15,6 +16,10 @@ public class Generation {
 	}
 
 	public int getPermutationCount() {
+		return permutations.size();
+	}
+	
+	public int getMaxPermutationCount() {
 		return permutationCount;
 	}
 
@@ -32,7 +37,7 @@ public class Generation {
 	}
 
 	public Permutation getRandomPermutation() {
-		return permutations.get((int) (Math.random() * permutationCount));
+		return permutations.get((int) (new Random().nextDouble() * permutationCount));
 	}
 
 	/**
@@ -50,8 +55,8 @@ public class Generation {
 	 * calcFitness berechnet die Fitness aller Permutationen
 	 * 
 	 */
-	public Double calcFitness() {
-		Double fitness = 0.0;
+	public double calcFitness() {
+		double fitness = 0.0;
 		for (Permutation permutation : permutations) {
 			permutation.calcFitness();
 			fitness = fitness + permutation.getFitness();
@@ -74,7 +79,7 @@ public class Generation {
 		newPermutations.addAll(children.permutations);
 
 		while (permutationCount < newPermutations.size()) {
-			Double worstFitness = Double.MAX_VALUE;
+			double worstFitness = Double.MAX_VALUE;
 			int worstPermutation = 0;
 
 			for (int i = 0; i < newPermutations.size(); i++) {
@@ -105,7 +110,7 @@ public class Generation {
 	 */
 	public Permutation getBestPermutation() {
 		Permutation bestPermutation = null;
-		Double bestFitness = Double.MAX_VALUE;
+		double bestFitness = Double.MAX_VALUE;
 		if (EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest)
 			bestFitness = -1 * Double.MAX_VALUE;
 		for (Permutation permutation : permutations) {
@@ -144,7 +149,7 @@ public class Generation {
 
 	public int getBestPermutationByIndex() {
 		int bestPermutation = -1;
-		Double bestFitness = Double.MAX_VALUE;
+		double bestFitness = Double.MAX_VALUE;
 		if (EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest)
 			bestFitness = -1 * Double.MAX_VALUE;
 		for (int i = 0; i < permutations.size(); i++) {

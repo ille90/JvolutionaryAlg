@@ -1,12 +1,15 @@
 package jea.alg.coding.binary;
 
+import java.util.Random;
+
 import jea.alg.EvolutionSingleton;
 import jea.alg.Gene;
 
 public class BitChain implements Gene {
 	
 	Bit[] bits;
-	Double value;
+	boolean valued;
+	double value;
 	boolean gray;
 	static EvolutionSingleton es;
 	
@@ -15,7 +18,7 @@ public class BitChain implements Gene {
 		bits = new Bit[es.getChainLength()];
 		for(int i = 0; i < bits.length; i++)
 			bits[i] = new Bit();
-		value = null;
+		valued = false;
 		gray = false;
 	}
 	
@@ -41,12 +44,12 @@ public class BitChain implements Gene {
 			a += tmpBits[tmpBits.length - (j+1)].getValue() * Math.pow(2, j);
 		}
 		value = es.getLowestValue() + es.getGranularity() * a;
-		
+		valued = true;
 	}
 	
 	@Override
 	public double getValue() {
-		if(value == null) {
+		if(!valued) {
 			calcValue();
 		}
 		return value;
@@ -116,7 +119,7 @@ public class BitChain implements Gene {
 	
 	@Override
 	public Gene getRandomGene() {
-		return new BitChain((int) (Math.random() * (es.getChainLength() - 1)));
+		return new BitChain((int) (new Random().nextDouble() * (es.getChainLength() - 1)));
 	}
 	
 	@Override

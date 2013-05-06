@@ -7,7 +7,7 @@ import jea.alg.coding.real.RealGene;
 public class Permutation {
 	
 	private Gene[] genes;
-	private Double fitness;
+	private double fitness;
 	
 	public Permutation() {
 		int geneCount = EvolutionSingleton.getInstance().getGeneCount();
@@ -68,11 +68,11 @@ public class Permutation {
 		EvolutionSingleton.getInstance().calcFitness(this);
 	}
 	
-	public void setFitness(Double fitness) {
+	public void setFitness(double fitness) {
 		this.fitness = fitness;
 	}
 	
-	public Double getFitness() {
+	public double getFitness() {
 		return fitness;
 	}
 	

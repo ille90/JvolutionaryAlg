@@ -22,7 +22,7 @@ public class EnvironmentalSelection {
 		
 		//neue Generation mit gleicher Anzahl an Permutationen
 		//wie ursprüngliche Generation
-		Generation newGeneration = new Generation(generation.getPermutationCount());
+		Generation newGeneration = new Generation(generation.getMaxPermutationCount());
 		
 		//Container für selektierte Permutationen
 		Vector<Permutation> newPermutations = new Vector<Permutation>();
@@ -32,9 +32,9 @@ public class EnvironmentalSelection {
 		
 		//Selektion
 		//solange Anzahl an maximalen Permutationen/Generation nicht erreicht ist:
-		while (generation.getPermutationCount() < newPermutations.size()) {
+		while (generation.getMaxPermutationCount() < newPermutations.size()) {
 			
-			Double worstFitness = Double.MAX_VALUE;
+			double worstFitness = Double.MAX_VALUE;
 			if(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Lowest)
 				worstFitness = -1 * Double.MAX_VALUE;
 			int worstPermutation = 0;

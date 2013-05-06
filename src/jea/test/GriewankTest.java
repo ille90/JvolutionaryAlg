@@ -1,13 +1,9 @@
 package jea.test;
 
 import jea.alg.EvolutionSingleton;
-import jea.alg.Gene;
-import jea.alg.Permutation;
 import jea.alg.Population;
-import jea.alg.coding.Coding;
 import jea.alg.coding.CodingType;
 import jea.alg.coding.binary.BinaryRecombinationType;
-import jea.alg.coding.binary.BitChain;
 import jea.alg.coding.real.RealRecombinationType;
 import jea.alg.selection.DetermSelectionType;
 import jea.alg.selection.FitnessSelectionType;
@@ -18,7 +14,7 @@ import jea.func.GriewankFunction;
 public class GriewankTest {
 	public static void main(String[] args) {
 		EvolutionSingleton es = EvolutionSingleton.getInstance();
-		es.setCodingType(CodingType.binary);
+		es.setCodingType(CodingType.real);
 		es.useGrayCode(false);
 		es.setBinaryRecombType(BinaryRecombinationType.onepoint);
 		es.setRealRecombType(RealRecombinationType.arithmetic);
@@ -26,15 +22,16 @@ public class GriewankTest {
 		es.setGeneCount(5);
 		es.setLowestValue(-512);
 		es.setHeighestValue(511);
-		es.setParentSelType(ParentSelectionType.rouletteSelection);
+		es.setParentSelType(ParentSelectionType.qSelection);
 		es.setPresumptType(PresumptionType.ranking);
 		es.setFitnessSelType(FitnessSelectionType.Lowest);
+		es.setMaxThreads(4);
 
 		DetermSelectionType type = DetermSelectionType.plusSelection;
 
-		int permutationCount = 20;
+		int permutationCount = 200;
 		int maxGeneration = 20;
-		int childrenCount = 50;
+		int childrenCount = 500;
 		float limit = 0.8f;
 		
 		GriewankFunction griewankFkt = new GriewankFunction();

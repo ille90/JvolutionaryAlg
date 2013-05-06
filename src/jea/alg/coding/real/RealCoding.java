@@ -1,5 +1,7 @@
 package jea.alg.coding.real;
 
+import java.util.Random;
+
 import jea.alg.EvolutionSingleton;
 import jea.alg.Permutation;
 import jea.alg.coding.Coding;
@@ -15,7 +17,7 @@ public class RealCoding implements Coding {
 		else if(rrt == RealRecombinationType.arithmetic)
 			children[0] = arithmeticRecombination(father, mother);
 		else {
-			if(Math.random() > 0.5)
+			if(new Random().nextDouble() > 0.5)
 				children[0] = arithmeticRecombination(father, mother);
 			else
 				children[0] = intermediatRecombination(father, mother);
@@ -35,7 +37,7 @@ public class RealCoding implements Coding {
 	Permutation arithmeticRecombination(Permutation father, Permutation mother) {
 		Permutation child = new Permutation();
 		int geneCount = EvolutionSingleton.getInstance().getGeneCount();
-		double t = Math.random();
+		double t = new Random().nextDouble();
 		for (int i = 0; i < geneCount; i++) {
 			double a = father.getGene(i).getValue();
 			double b = mother.getGene(i).getValue();

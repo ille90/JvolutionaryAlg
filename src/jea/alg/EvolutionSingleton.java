@@ -34,6 +34,8 @@ public class EvolutionSingleton {
 	private BinaryRecombinationType binaryRecombType;
 	private RealRecombinationType realRecombType;
 	
+	private int maxThreads;
+	
 	private static EvolutionSingleton instance;
 	
 	private EvolutionSingleton() {
@@ -46,6 +48,7 @@ public class EvolutionSingleton {
 		coding = new BinaryCoding();
 		binaryRecombType = BinaryRecombinationType.random;
 		realRecombType = RealRecombinationType.random;
+		maxThreads = 1;
 	}
 	
 	public static EvolutionSingleton getInstance() {
@@ -179,5 +182,16 @@ public class EvolutionSingleton {
 	
 	public boolean useGraycode() {
 		return useGrayCode;
+	}
+	
+	public int getMaxThreads() {
+		return maxThreads;
+	}
+	
+	public void setMaxThreads(int maxThreads) {
+		if(maxThreads > 0)
+			this.maxThreads = maxThreads;
+		else
+			this.maxThreads = 1;
 	}
 }

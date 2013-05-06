@@ -42,35 +42,29 @@ public class Population {
 
 			System.out.print((currentGeneration + 1) + ". Generation: ");
 			Generation children = new Generation(childrenCount);
-			int currentChild = 1;
+			Thread[] threads = new Thread[EvolutionSingleton.getInstance()
+					.getMaxThreads()];
 
-			while (currentChild <= childrenCount) {
-
-				Permutation father = ParentSelection
-						.useParentSelection(generation);
-				Permutation mother = ParentSelection
-						.useParentSelection(generation);
-
-				/*
-				 * Permutation father = generation.getRandomPermutation();
-				 * Permutation mother = generation.getRandomPermutation();
-				 */
-
-				while (father == mother)
-					mother = generation.getRandomPermutation();
-				double u = Math.random();
-
-				if (u < limit) {
-					Permutation[] tmpChildren = EvolutionSingleton
-							.getInstance().getCoding()
-							.recombination(father, mother);
-					for (Permutation child : tmpChildren) {
-						EvolutionSingleton.getInstance().getCoding()
-								.mutation(child);
-						children.addPermutation(child);
-						currentChild++;
+			while (children.getPermutationCount() < childrenCount) {
+				for (int i = 0; i < threads.length; i++) {
+					if (threads[i] != null && !threads[i].isAlive())
+						threads[i] = null;
+					if (threads[i] == null) {
+						threads[i] = new Thread(new ChildrenCreator(children));
+						threads[i].start();
+						break;
 					}
 				}
+			}
+
+			for (Thread thread : threads) {
+				if (thread != null)
+					try {
+						thread.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 
 			children.calcFitness();
@@ -87,11 +81,38 @@ public class Population {
 			}
 
 			System.out.println("fertig");
-			generation.printGeneration();
+			// generation.printGeneration();
 		}
 	}
 
 	public Permutation getBestPermutation() {
 		return generation.getBestPermutation();
+	}
+
+	private class ChildrenCreator implements Runnable {
+
+		Generation children;
+
+		public ChildrenCreator(Generation children) {
+			this.children = children;
+		}
+
+		@Override
+		public void run() {
+
+			Permutation father = ParentSelection.useParentSelection(generation);
+			Permutation mother = ParentSelection.useParentSelection(generation);
+
+			while (father == mother)
+				mother = generation.getRandomPermutation();
+			Permutation[] tmpChildren = EvolutionSingleton.getInstance()
+					.getCoding().recombination(father, mother);
+			for (Permutation child : tmpChildren) {
+				EvolutionSingleton.getInstance().getCoding().mutation(child);
+				child.calcFitness();
+				children.addPermutation(child);
+			}
+		}
+
 	}
 }
