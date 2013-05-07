@@ -16,28 +16,27 @@ public class GriewankTest {
 		EvolutionSingleton es = EvolutionSingleton.getInstance();
 		es.setCodingType(CodingType.real);
 		es.useGrayCode(false);
-		es.setBinaryRecombType(BinaryRecombinationType.onepoint);
-		es.setRealRecombType(RealRecombinationType.arithmetic);
+		es.setBinaryRecombType(BinaryRecombinationType.random);
+		es.setRealRecombType(RealRecombinationType.random);
 		es.setChainLength(10);
 		es.setGeneCount(5);
 		es.setLowestValue(-512);
 		es.setHeighestValue(511);
-		es.setParentSelType(ParentSelectionType.qSelection);
-		es.setPresumptType(PresumptionType.ranking);
+		es.setParentSelType(ParentSelectionType.multibleQSelection);
+		es.setPresumptType(PresumptionType.fitness);
 		es.setFitnessSelType(FitnessSelectionType.Lowest);
-		es.setMaxThreads(4);
+		es.setMaxThreads(2);
 
 		DetermSelectionType type = DetermSelectionType.plusSelection;
 
 		int permutationCount = 200;
 		int maxGeneration = 20;
 		int childrenCount = 500;
-		float limit = 0.8f;
 		
 		GriewankFunction griewankFkt = new GriewankFunction();
 		es.setFitnessFunction(griewankFkt);
 
-		Population population = new Population(permutationCount, maxGeneration, childrenCount, limit);
+		Population population = new Population(permutationCount, maxGeneration, childrenCount);
 		population.init();
 		griewankFkt.printPermutationInfo(population.getBestPermutation());
 		population.run(type);

@@ -1,8 +1,5 @@
 package jea.alg;
 
-import java.util.Vector;
-
-import jea.alg.coding.Coding;
 import jea.alg.selection.DetermSelectionType;
 import jea.alg.selection.EnvironmentalSelection;
 import jea.alg.selection.ParentSelection;
@@ -14,20 +11,12 @@ public class Population {
 	int maxGeneration;
 	Generation generation;
 	int childrenCount;
-	float limit;
-	Coding coding;
 
 	public Population(int permutationCount, int maxGeneration,
-			int childrenCount, float limit) {
+			int childrenCount) {
 		this.permutationCount = permutationCount;
 		this.maxGeneration = maxGeneration;
 		this.childrenCount = childrenCount;
-		if (limit > 1)
-			this.limit = 1;
-		else if (limit < 0)
-			this.limit = 0;
-		else
-			this.limit = limit;
 	}
 
 	public void init() {
@@ -67,18 +56,13 @@ public class Population {
 					}
 			}
 
-			children.calcFitness();
 			currentGeneration++;
 
-			if (type == DetermSelectionType.commaSelection) {
-				generation = EnvironmentalSelection.determSelection(children);
-			} else {
-				Vector<Permutation> newPermutations = new Vector<Permutation>();
-				newPermutations.addAll(generation.getPermutations());
-				newPermutations.addAll(children.getPermutations());
-				generation.setPermutations(newPermutations);
-				generation = EnvironmentalSelection.determSelection(generation);
-			}
+			if (type == DetermSelectionType.commaSelection)
+				generation.setPermutations(children.getPermutations());
+			else
+				generation.addGeneration(children);
+			EnvironmentalSelection.determSelection(generation);
 
 			System.out.println("fertig");
 			// generation.printGeneration();
@@ -113,6 +97,5 @@ public class Population {
 				children.addPermutation(child);
 			}
 		}
-
 	}
 }

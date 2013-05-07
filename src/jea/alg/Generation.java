@@ -175,6 +175,10 @@ public class Generation {
 	public void setPermutations(Vector<Permutation> newPermutations) {
 		this.permutations = newPermutations;
 	}
+	
+	public void addGeneration(Generation generation) {
+		this.permutations.addAll(generation.permutations);
+	}
 
 	public void setPermutation(Permutation newPermutation, int index) {
 		this.permutations.set(index, newPermutation);

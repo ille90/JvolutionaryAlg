@@ -35,7 +35,7 @@ public class RundreiseBeispiel {
 		EvolutionSingleton.getInstance().setPresumptType(PresumptionType.ranking);
 		EvolutionSingleton.getInstance().setMemberCount(5);
 		
-		Population population = new Population(permutationCount, maxGeneration, childrenCount, limit);
+		Population population = new Population(permutationCount, maxGeneration, childrenCount);
 		population.init();
 		staedte.printPermutationInfo(population.getBestPermutation());
 		population.run(type);
