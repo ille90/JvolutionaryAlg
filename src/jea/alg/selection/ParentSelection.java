@@ -15,6 +15,27 @@ import jea.alg.Permutation;
  */
 public class ParentSelection {
 
+	double[] presumptions;
+	Generation generation;
+
+	public ParentSelection() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void load(Generation generation) {
+		generationOrder(generation);
+		this.generation = generation;
+		if (EvolutionSingleton.getInstance().getParentSelType() == ParentSelectionType.rouletteSelection) {
+			if (EvolutionSingleton.getInstance().getPresumptType() == PresumptionType.ranking) {
+				// rangbasierte Selektion
+				rankingPropSelection();
+			} else {
+				// fitnessprobalistische Selektion
+				fitnessPropSelection();
+			}
+		}
+	}
+
 	/**
 	 * fitnessprobalistische Selektion Methode für Bestimmung von
 	 * Wahrscheinlichkeitswerte für die Permutationen Ausgangspunkt für
@@ -24,10 +45,10 @@ public class ParentSelection {
 	 *            ursprüngliche Generation
 	 * @return Double[] Wahrscheinlichkeitswerte der Permutationen
 	 */
-	private static double[] fitnessPropSelection(Generation generation) {
+	private void fitnessPropSelection() {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		double[] presumptions = new double[generation.getPermutations().size()];
+		presumptions = new double[generation.getPermutations().size()];
 
 		// Fitness der ursprünglichen Generation
 		double generationFitness = generation.calcFitness();
@@ -36,18 +57,12 @@ public class ParentSelection {
 		// Bestimmung des Wahrscheinlichkeitswerts einer jeden Permutation
 		for (Permutation permutation : generation.getPermutations()) {
 
-			// Fitness der Permutation bestimmen
-			permutation.calcFitness();
-
 			// W-Wert bestimmen
 			// Verhältnis der Fitness des Individuums zur Fitness aller
 			presumptions[i] = permutation.getFitness() / generationFitness;
 
 			i++;
 		}
-
-		// Rückgabe des Containers der W-Werte
-		return presumptions;
 	}
 
 	/**
@@ -59,10 +74,10 @@ public class ParentSelection {
 	 *            ursprüngliche Generation
 	 * @return Double[] Wahrscheinlichkeitswerte der Permutationen
 	 */
-	private static double[] rankingPropSelection(Generation generation) {
+	private void rankingPropSelection() {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
-		double[] presumptions = new double[generation.getPermutations().size()];
+		presumptions = new double[generation.getPermutations().size()];
 
 		// Anzahl der Individuen der Generation
 		int r = generation.getPermutations().size();
@@ -72,9 +87,6 @@ public class ParentSelection {
 
 			presumptions[i] = (double) 2 / r * (1 - ((i - 1) / (r - 1)));
 		}
-
-		// Rückgabe des Containers der W-Werte
-		return presumptions;
 	}
 
 	/**
@@ -86,7 +98,11 @@ public class ParentSelection {
 	 * @return Generation Generation mit entsprechender Rangfolge der
 	 *         Permutaionen
 	 */
-	public static Generation generationOrder(Generation generation) {
+	private void generationOrder(Generation generation) {
+
+		if (EvolutionSingleton.getInstance().getParentSelType() != ParentSelectionType.rouletteSelection
+				|| EvolutionSingleton.getInstance().getPresumptType() != PresumptionType.ranking)
+			return;
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
 		double[] presumptions = new double[generation.getPermutations().size()];
@@ -96,7 +112,6 @@ public class ParentSelection {
 		// Fitness der einzelnen Individuen bestimmen
 		for (Permutation permutation : generation.getPermutations()) {
 
-			permutation.calcFitness();
 			presumptions[i] = permutation.getFitness();
 			i++;
 		}
@@ -107,8 +122,9 @@ public class ParentSelection {
 
 			for (int x = 0; x < presumptions.length - 1; x++) {
 
-				if ((EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest && presumptions[x] > presumptions[x + 1]) ||
-						(EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Lowest && presumptions[x] < presumptions[x + 1])) {
+				if ((EvolutionSingleton.getInstance().getFitnessSelType() == FitnessSelectionType.Highest && presumptions[x] > presumptions[x + 1])
+						|| (EvolutionSingleton.getInstance()
+								.getFitnessSelType() == FitnessSelectionType.Lowest && presumptions[x] < presumptions[x + 1])) {
 
 					double t = presumptions[x];
 					Permutation u = generation.getPermutation(x);
@@ -122,9 +138,6 @@ public class ParentSelection {
 				}
 			}
 		}
-
-		// Rückgabe der geänderten Generation
-		return generation;
 	}
 
 	/**
@@ -137,8 +150,7 @@ public class ParentSelection {
 	 *            gewähltes probalistisches Selektionsverfahren
 	 * @return Permutation gewähltes Elternteil
 	 */
-	public static Permutation rouletteSelection(Generation generation,
-			PresumptionType type) {
+	private Permutation rouletteSelection() {
 
 		// Container für die Wahrscheinlichkeitswerte der Permutationen
 		double[] presumptions = new double[generation.getPermutations().size()];
@@ -146,25 +158,6 @@ public class ParentSelection {
 		// Warscheinlichkeitswert zur Bestimmung des entsprechenden Individuums
 		double z = new Random().nextDouble();
 		double currentValue = 0;
-
-		// Auswahl zwischen den probalistischen Selektionsverfahren
-
-		if (type == PresumptionType.ranking) {
-			// rangbasierte Selektion
-
-			// 1. Permutationen einer Generation in entsprechende RF bringen
-			Generation newGeneration = generationOrder(generation);
-
-			// 2. Array mit Wahrscheinlichkeitswerten
-			presumptions = rankingPropSelection(newGeneration);
-
-			generation = newGeneration;
-
-		} else {
-
-			// fitnessprobalistische Selektion
-			presumptions = fitnessPropSelection(generation);
-		}
 
 		// eigentliche Rouletteselektion
 		for (int i = 0; i < presumptions.length; i++) {
@@ -184,8 +177,7 @@ public class ParentSelection {
 		return generation.getPermutation(presumptions.length - 1);
 	}
 
-	public static Permutation qSelection(Generation generation,
-			int participantCount) {
+	private Permutation qSelection(int participantCount) {
 
 		Generation participants = new Generation(
 				(participantCount < generation.getMaxPermutationCount()) ? participantCount
@@ -193,22 +185,22 @@ public class ParentSelection {
 		Vector<Integer> indices = new Vector<Integer>();
 		int i = 0;
 		while (i < participants.getMaxPermutationCount()) {
-			int j = (int) (new Random().nextDouble() * generation.getMaxPermutationCount());
+			int j = (int) (new Random().nextDouble() * generation
+					.getMaxPermutationCount());
 			if (!indices.contains(j)) {
 				participants.addPermutation(generation.getPermutation(j));
 				i++;
 			}
 		}
-		participants.calcFitness();
 		return participants.getBestPermutation();
 	}
 
-	public static Permutation multibleQSelection(Generation generation,
-			int participantCount) {
+	private Permutation multibleQSelection(int participantCount) {
 		int[] points = new int[generation.getMaxPermutationCount()];
 		for (int n = 0; n < generation.getMaxPermutationCount(); n++) {
 			Generation participants = new Generation(
-					((participantCount + 1) < generation.getMaxPermutationCount()) ? (participantCount + 1)
+					((participantCount + 1) < generation
+							.getMaxPermutationCount()) ? (participantCount + 1)
 							: generation.getMaxPermutationCount());
 			Vector<Integer> indices = new Vector<Integer>();
 
@@ -217,14 +209,14 @@ public class ParentSelection {
 
 			int i = 0;
 			while (i < participants.getMaxPermutationCount()) {
-				int j = (int) (new Random().nextDouble() * generation.getMaxPermutationCount());
+				int j = (int) (new Random().nextDouble() * generation
+						.getMaxPermutationCount());
 				if (!indices.contains(j)) {
 					participants.addPermutation(generation.getPermutation(j));
 					indices.add(j);
 					i++;
 				}
 			}
-			participants.calcFitness();
 			int winner = indices.get(participants.getBestPermutationByIndex());
 			if (winner != -1) {
 				points[winner]++;
@@ -250,18 +242,16 @@ public class ParentSelection {
 		return winnerGen.getRandomPermutation();
 	}
 
-	public static Permutation useParentSelection(Generation generation) {
+	public Permutation useParentSelection() {
 
 		switch (EvolutionSingleton.getInstance().getParentSelType()) {
 		case rouletteSelection:
-			return rouletteSelection(generation, EvolutionSingleton
-					.getInstance().getPresumptType());
+			return rouletteSelection();
 		case qSelection:
-			return qSelection(generation, EvolutionSingleton.getInstance()
-					.getMemberCount());
+			return qSelection(EvolutionSingleton.getInstance().getMemberCount());
 		case multibleQSelection:
-			return multibleQSelection(generation, EvolutionSingleton
-					.getInstance().getMemberCount());
+			return multibleQSelection(EvolutionSingleton.getInstance()
+					.getMemberCount());
 		default:
 			return null;
 		}

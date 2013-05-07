@@ -18,7 +18,7 @@ public class Generation {
 	public int getPermutationCount() {
 		return permutations.size();
 	}
-	
+
 	public int getMaxPermutationCount() {
 		return permutationCount;
 	}
@@ -37,7 +37,8 @@ public class Generation {
 	}
 
 	public Permutation getRandomPermutation() {
-		return permutations.get((int) (new Random().nextDouble() * permutationCount));
+		return permutations
+				.get((int) (new Random().nextDouble() * permutationCount));
 	}
 
 	/**
@@ -58,11 +59,16 @@ public class Generation {
 	public double calcFitness() {
 		double fitness = 0.0;
 		for (Permutation permutation : permutations) {
-			permutation.calcFitness();
 			fitness = fitness + permutation.getFitness();
 		}
 
 		return fitness;
+	}
+
+	public void calcPermutationFitness() {
+		for (Permutation permutation : permutations) {
+			permutation.calcFitness();
+		}
 	}
 
 	/**
@@ -137,7 +143,7 @@ public class Generation {
 		}
 		return heighestFitness;
 	}
-	
+
 	public double getLowestFitness() {
 		double lowestFitness = Double.MAX_VALUE;
 		for (Permutation permutation : permutations) {
@@ -175,7 +181,7 @@ public class Generation {
 	public void setPermutations(Vector<Permutation> newPermutations) {
 		this.permutations = newPermutations;
 	}
-	
+
 	public void addGeneration(Generation generation) {
 		this.permutations.addAll(generation.permutations);
 	}

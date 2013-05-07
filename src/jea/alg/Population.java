@@ -11,9 +11,9 @@ public class Population {
 	int maxGeneration;
 	Generation generation;
 	int childrenCount;
+	ParentSelection parentSelection;
 
-	public Population(int permutationCount, int maxGeneration,
-			int childrenCount) {
+	public Population(int permutationCount, int maxGeneration, int childrenCount) {
 		this.permutationCount = permutationCount;
 		this.maxGeneration = maxGeneration;
 		this.childrenCount = childrenCount;
@@ -23,13 +23,16 @@ public class Population {
 		currentGeneration = 0;
 		generation = new Generation(permutationCount);
 		generation.fillInitialGeneration();
-		generation.calcFitness();
+		generation.calcPermutationFitness();
+		parentSelection = new ParentSelection();
 	}
 
 	public void run(DetermSelectionType type) {
 		while (currentGeneration < maxGeneration) {
 
 			System.out.print((currentGeneration + 1) + ". Generation: ");
+
+			parentSelection.load(generation);
 			Generation children = new Generation(childrenCount);
 			Thread[] threads = new Thread[EvolutionSingleton.getInstance()
 					.getMaxThreads()];
@@ -84,8 +87,8 @@ public class Population {
 		@Override
 		public void run() {
 
-			Permutation father = ParentSelection.useParentSelection(generation);
-			Permutation mother = ParentSelection.useParentSelection(generation);
+			Permutation father = parentSelection.useParentSelection();
+			Permutation mother = parentSelection.useParentSelection();
 
 			while (father == mother)
 				mother = generation.getRandomPermutation();

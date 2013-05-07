@@ -19,18 +19,18 @@ public class GriewankTest {
 		es.setBinaryRecombType(BinaryRecombinationType.random);
 		es.setRealRecombType(RealRecombinationType.random);
 		es.setChainLength(10);
-		es.setGeneCount(5);
+		es.setGeneCount(10);
 		es.setLowestValue(-512);
 		es.setHeighestValue(511);
-		es.setParentSelType(ParentSelectionType.multibleQSelection);
-		es.setPresumptType(PresumptionType.fitness);
+		es.setParentSelType(ParentSelectionType.rouletteSelection);
+		es.setPresumptType(PresumptionType.ranking);
 		es.setFitnessSelType(FitnessSelectionType.Lowest);
 		es.setMaxThreads(2);
 
 		DetermSelectionType type = DetermSelectionType.plusSelection;
 
 		int permutationCount = 200;
-		int maxGeneration = 20;
+		int maxGeneration = 50;
 		int childrenCount = 500;
 		
 		GriewankFunction griewankFkt = new GriewankFunction();

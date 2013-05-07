@@ -44,7 +44,5 @@ public class EnvironmentalSelection {
 			//Permutation mit schlechtester Fitness entfernen
 			generation.getPermutations().remove(worstPermutation);
 		}
-		//return generation;
-		//return newGeneration;
 	}	
 }
