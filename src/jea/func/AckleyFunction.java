@@ -6,12 +6,24 @@ import jea.alg.Permutation;
 
 public class AckleyFunction implements FitnessFunction{
 
+	public double lowestValue = -20;
+	public double heighestValue = 30;
 	EvolutionSingleton es;
 	double basefitness;
 	
 	public AckleyFunction() {
 		es = EvolutionSingleton.getInstance();
 		basefitness = 20 + Math.exp(1);
+	}
+
+	@Override
+	public Double getLowestValue() {
+		return lowestValue;
+	}
+
+	@Override
+	public Double getHeighestValue() {
+		return heighestValue;
 	}
 	
 	@Override
@@ -27,7 +39,8 @@ public class AckleyFunction implements FitnessFunction{
 		fitness -= Math.exp(cossum / es.getGeneCount());
 		permutation.setFitness(fitness);
 	}
-		
+
+	@Override
 	public void printPermutationInfo(Permutation permutation) {
 		String gene = "";
 		for(int i = 0; i < es.getGeneCount(); i++) {

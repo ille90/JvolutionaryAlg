@@ -1,7 +1,9 @@
 package jea.alg;
 
 public interface FitnessFunction {
-	
-	public void calcFitness(Permutation permutation);
 
+	public Double getLowestValue();
+	public Double getHeighestValue();
+	public void calcFitness(Permutation permutation);
+	public void printPermutationInfo(Permutation permutation);
 }

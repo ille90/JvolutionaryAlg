@@ -9,37 +9,33 @@ import jea.alg.selection.ParentSelection;
 public class Population {
 
 	int currentGeneration;
-	int permutationCount;
-	int maxGeneration;
 	Generation generation;
-	int childrenCount;
 	ParentSelection parentSelection;
+	Model model;
 
-	public Population(int permutationCount, int maxGeneration, int childrenCount) {
-		this.permutationCount = permutationCount;
-		this.maxGeneration = maxGeneration;
-		this.childrenCount = childrenCount;
+	public Population() {
+		model = EvolutionSingleton.getInstance().getModel();
 	}
 
 	public void init() {
 		currentGeneration = 0;
-		generation = new Generation(permutationCount);
+		generation = new Generation(model.permutationCount);
 		generation.fillInitialGeneration();
 		generation.calcPermutationFitness();
 		parentSelection = new ParentSelection();
 	}
 
-	public void run(DetermSelectionType type) {
-		while (currentGeneration < maxGeneration) {
+	public void run() {//DetermSelectionType type) {
+		while (currentGeneration < model.maxGeneration) {
 
 			System.out.print((currentGeneration + 1) + ". Generation: ");
 
 			parentSelection.load(generation);
-			Generation children = new Generation(childrenCount);
+			Generation children = new Generation(model.childrenCount);
 			Thread[] threads = new Thread[EvolutionSingleton.getInstance()
 					.getMaxThreads()];
 
-			while (children.getPermutationCount() < childrenCount) {
+			while (children.getPermutationCount() < model.childrenCount) {
 				for (int i = 0; i < threads.length; i++) {
 					if (threads[i] != null && !threads[i].isAlive())
 						threads[i] = null;
@@ -63,7 +59,7 @@ public class Population {
 
 			currentGeneration++;
 
-			if (type == DetermSelectionType.commaSelection)
+			if (model.determSelType == DetermSelectionType.commaSelection)
 				generation.setPermutations(children.getPermutations());
 			else
 				generation.addGeneration(children);

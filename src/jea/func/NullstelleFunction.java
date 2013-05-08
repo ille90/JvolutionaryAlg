@@ -13,6 +13,16 @@ public class NullstelleFunction implements FitnessFunction{
 	}
 	
 	@Override
+	public Double getLowestValue() {
+		return null;
+	}
+
+	@Override
+	public Double getHeighestValue() {
+		return null;
+	}
+	
+	@Override
 	public void calcFitness(Permutation permutation) {
 		double[] coords = new double[es.getGeneCount()];
 		double sum = 0;
@@ -34,7 +44,8 @@ public class NullstelleFunction implements FitnessFunction{
 		}
 		permutation.setFitness(Math.sqrt(rtfitness));
 	}
-		
+	
+	@Override
 	public void printPermutationInfo(Permutation permutation) {
 		String gene = "";
 		for(int i = 0; i < es.getGeneCount(); i++) {

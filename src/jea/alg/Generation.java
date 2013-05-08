@@ -24,8 +24,9 @@ public class Generation {
 	}
 
 	public void addPermutation(Permutation permutation) {
-		if (permutations.size() < permutationCount)
+		if (permutations.size() < permutationCount) {
 			permutations.add(permutation);
+		}
 	}
 
 	public Permutation getPermutation(int position) {
@@ -47,7 +48,7 @@ public class Generation {
 	 * 
 	 */
 	public void fillInitialGeneration() {
-		for (int i = permutations.size(); i < permutationCount; i++) {
+		while (permutations.size() < permutationCount) {
 			permutations.add(Permutation.getRandomPermutation());
 		}
 	}

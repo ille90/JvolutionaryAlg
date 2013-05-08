@@ -89,4 +89,17 @@ public class Permutation {
 		strBld.append("\n");
 		return strBld.toString();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Permutation) {
+			Permutation perm = (Permutation) obj;
+			for (int i = 0; i < genes.length; i++) {
+				if(genes[i].getValue() != perm.genes[i].getValue())
+					return false;
+			}
+			return true;
+		}
+		return super.equals(obj);
+	}
 }

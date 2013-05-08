@@ -1,10 +1,10 @@
 package jea.test;
 
 import jea.alg.EvolutionSingleton;
+import jea.alg.Model;
 import jea.alg.Population;
 import jea.alg.coding.CodingType;
 import jea.alg.coding.binary.BinaryRecombinationType;
-import jea.alg.coding.real.RealRecombinationType;
 import jea.alg.selection.DetermSelectionType;
 import jea.alg.selection.FitnessSelectionType;
 import jea.alg.selection.ParentSelectionType;
@@ -14,33 +14,32 @@ import jea.func.NullstelleFunction;
 public class NullstellenTest {
 	public static void main(String[] args) {
 		EvolutionSingleton es = EvolutionSingleton.getInstance();
-		es.setCodingType(CodingType.binary);
-		es.useGrayCode(false);
-		es.setBinaryRecombType(BinaryRecombinationType.random);
-		es.setRealRecombType(RealRecombinationType.random);
-		es.setChainLength(20);
-		es.setGeneCount(5);
-		es.setLowestValue(-100);
-		es.setHeighestValue(99);
-		es.setParentSelType(ParentSelectionType.qSelection);
-		es.setPresumptType(PresumptionType.fitness);
-		es.setFitnessSelType(FitnessSelectionType.Lowest);
 		es.setMaxThreads(2);
 
-		DetermSelectionType type = DetermSelectionType.plusSelection;
-
-		int permutationCount = 200;
-		int maxGeneration = 40;
-		int childrenCount = 500;
+		NullstelleFunction nullstFkt = new NullstelleFunction();
+		Model nullstModel = new Model(nullstFkt);
+		nullstModel.setCodingType(CodingType.binary);
+		nullstModel.useGrayCode = false;
+		nullstModel.binaryRecombType = BinaryRecombinationType.random;
+		nullstModel.setChainLength(10);
+		nullstModel.geneCount = 20;
+		nullstModel.parentSelType = ParentSelectionType.qSelection;
+		nullstModel.presumptType = PresumptionType.ranking;
+		nullstModel.fitnessSelType = FitnessSelectionType.Lowest;
+		nullstModel.permutationCount = 200;
+		nullstModel.maxGeneration = 20;
+		nullstModel.childrenCount = 500;
+		nullstModel.determSelType = DetermSelectionType.plusSelection;
+		nullstModel.setLowestValue(-100);
+		nullstModel.setHeighestValue(99);
 		
-		NullstelleFunction nullstkFkt = new NullstelleFunction();
-		es.setFitnessFunction(nullstkFkt);
+		es.setModel(nullstModel);
 
-		Population population = new Population(permutationCount, maxGeneration, childrenCount);
+		Population population = new Population();
 		population.init();
-		nullstkFkt.printPermutationInfo(population.getBestPermutation());
-		population.run(type);
-		nullstkFkt.printPermutationInfo(population.getBestPermutation());
+		nullstFkt.printPermutationInfo(population.getBestPermutation());
+		population.run();
+		nullstFkt.printPermutationInfo(population.getBestPermutation());
 		
 	}
 }
