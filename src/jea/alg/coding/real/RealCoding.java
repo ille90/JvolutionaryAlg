@@ -51,10 +51,24 @@ public class RealCoding implements Coding {
 		return child;
 	}
 	
-	//TODO: Mutation
 	@Override
 	public void mutation(Permutation permutation) {
-		// TODO Auto-generated method stub
-		
+		EvolutionSingleton es = EvolutionSingleton.getInstance();
+		double mut = new Random().nextDouble();// * (es.getHeighestValue() - es.getLowestValue());
+		if(new Random().nextBoolean()) {
+			for (int i = 0; i < es.getGeneCount(); i++) {
+				double newvalue = permutation.getGene(i).getValue() + mut;
+				if(newvalue > es.getHeighestValue())
+					newvalue = es.getHeighestValue();
+				permutation.setGene(i, new RealGene(newvalue));
+			}
+		} else  {
+			for (int i = 0; i < es.getGeneCount(); i++) {
+				double newvalue = permutation.getGene(i).getValue() - mut;
+				if(newvalue < es.getLowestValue())
+					newvalue = es.getLowestValue();
+				permutation.setGene(i, new RealGene(newvalue));
+			}
+		}
 	}
 }

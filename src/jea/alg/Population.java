@@ -1,5 +1,7 @@
 package jea.alg;
 
+import java.util.Random;
+
 import jea.alg.selection.DetermSelectionType;
 import jea.alg.selection.EnvironmentalSelection;
 import jea.alg.selection.ParentSelection;
@@ -95,7 +97,8 @@ public class Population {
 			Permutation[] tmpChildren = EvolutionSingleton.getInstance()
 					.getCoding().recombination(father, mother);
 			for (Permutation child : tmpChildren) {
-				EvolutionSingleton.getInstance().getCoding().mutation(child);
+				if(new Random().nextBoolean())
+					EvolutionSingleton.getInstance().getCoding().mutation(child);
 				child.calcFitness();
 				children.addPermutation(child);
 			}
