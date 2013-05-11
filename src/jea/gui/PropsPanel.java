@@ -1,32 +1,41 @@
 package jea.gui;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JComboBox;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JSpinner;
-import javax.swing.JCheckBox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JButton;
-import javax.swing.SpinnerModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import jea.alg.Model;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeListener;
+import jea.alg.coding.CodingType;
+import jea.alg.coding.binary.BinaryRecombinationType;
+import jea.alg.coding.real.RealRecombinationType;
+import jea.alg.selection.DetermSelectionType;
+import jea.alg.selection.FitnessSelectionType;
+import jea.alg.selection.ParentSelectionType;
+import jea.alg.selection.PresumptionType;
 
 public class PropsPanel extends JPanel {
 
 	Model model;
 	private JTextField funktionTextField;
+	
 	/**
 	 * Create the panel.
 	 */
 	public PropsPanel(Model newModel) {
+		
 		this.model = newModel;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 28, 0, 0, 0, 0, 0};
@@ -62,7 +71,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblGenerationen.gridy = 1;
 		add(lblGenerationen, gbc_lblGenerationen);
 		
-		JSpinner generationSpinner = new JSpinner();
+		final JSpinner generationSpinner = new JSpinner();
 		generationSpinner.setModel(new SpinnerNumberModel(model.maxGeneration, 5, 1000, 5));
 		GridBagConstraints gbc_generationSpinner = new GridBagConstraints();
 		gbc_generationSpinner.insets = new Insets(0, 0, 5, 5);
@@ -77,7 +86,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblIndividuen.gridy = 1;
 		add(lblIndividuen, gbc_lblIndividuen);
 		
-		JSpinner individuenSpinner = new JSpinner();
+		final JSpinner individuenSpinner = new JSpinner();
 		individuenSpinner.setModel(new SpinnerNumberModel(model.permutationCount, 5, 1000, 5));
 		GridBagConstraints gbc_individuenSpinner = new GridBagConstraints();
 		gbc_individuenSpinner.insets = new Insets(0, 0, 5, 5);
@@ -92,7 +101,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblKinder.gridy = 1;
 		add(lblKinder, gbc_lblKinder);
 		
-		JSpinner kinderSpinner = new JSpinner();
+		final JSpinner kinderSpinner = new JSpinner();
 		kinderSpinner.setModel(new SpinnerNumberModel(model.childrenCount, 5, 1000, 5));
 		GridBagConstraints gbc_kinderSpinner = new GridBagConstraints();
 		gbc_kinderSpinner.insets = new Insets(0, 0, 5, 0);
@@ -107,7 +116,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblGene.gridy = 2;
 		add(lblGene, gbc_lblGene);
 		
-		JSpinner geneSpinner = new JSpinner();
+		final JSpinner geneSpinner = new JSpinner();
 		geneSpinner.setModel(new SpinnerNumberModel(model.geneCount, 5, 1000, 1));
 		GridBagConstraints gbc_geneSpinner = new GridBagConstraints();
 		gbc_geneSpinner.insets = new Insets(0, 0, 5, 5);
@@ -122,7 +131,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblMinWert.gridy = 2;
 		add(lblMinWert, gbc_lblMinWert);
 		
-		JSpinner minWertSpinner = new JSpinner();
+		final JSpinner minWertSpinner = new JSpinner();
 		minWertSpinner.setModel(new SpinnerNumberModel(model.getLowestValue(), -1024.0d, 1023.0d, 1.0d));
 		if(model.getFitnessFunction().getLowestValue() != null)
 			minWertSpinner.setEnabled(false);
@@ -139,7 +148,7 @@ public class PropsPanel extends JPanel {
 		gbc_lblMaxWert.gridy = 2;
 		add(lblMaxWert, gbc_lblMaxWert);
 		
-		JSpinner maxWertSpinner = new JSpinner();
+		final JSpinner maxWertSpinner = new JSpinner();
 		maxWertSpinner.setModel(new SpinnerNumberModel(model.getHeighestValue(), -1024.0d, 1023.0d, 1.0d));
 		if(model.getFitnessFunction().getHeighestValue() != null)
 			maxWertSpinner.setEnabled(false);
@@ -157,7 +166,10 @@ public class PropsPanel extends JPanel {
 		gbc_lblKodierung.gridy = 3;
 		add(lblKodierung, gbc_lblKodierung);
 		
-		JComboBox kodierungComboBox = new JComboBox();
+		final JComboBox<String> kodierungComboBox = new JComboBox<String>();
+		kodierungComboBox.addItem("binär");
+		kodierungComboBox.addItem("reel");
+		kodierungComboBox.setSelectedIndex(0);
 		GridBagConstraints gbc_kodierungComboBox = new GridBagConstraints();
 		gbc_kodierungComboBox.gridwidth = 2;
 		gbc_kodierungComboBox.insets = new Insets(0, 0, 5, 5);
@@ -166,7 +178,8 @@ public class PropsPanel extends JPanel {
 		gbc_kodierungComboBox.gridy = 3;
 		add(kodierungComboBox, gbc_kodierungComboBox);
 		
-		JCheckBox chckbxGraykodierung = new JCheckBox("Graykodierung");
+		final JCheckBox chckbxGraykodierung = new JCheckBox("Graykodierung");
+		chckbxGraykodierung.setSelected(false);
 		GridBagConstraints gbc_chckbxGraykodierung = new GridBagConstraints();
 		gbc_chckbxGraykodierung.gridwidth = 2;
 		gbc_chckbxGraykodierung.insets = new Insets(0, 0, 5, 0);
@@ -181,7 +194,11 @@ public class PropsPanel extends JPanel {
 		gbc_lblRekombination.gridy = 4;
 		add(lblRekombination, gbc_lblRekombination);
 		
-		JComboBox rekombinationComboBox = new JComboBox();
+		final JComboBox<String> rekombinationComboBox = new JComboBox<String>();
+		rekombinationComboBox.addItem("Zufällig");
+		rekombinationComboBox.addItem("Ein-Punkt");
+		rekombinationComboBox.addItem("Zwei-Punkt");
+		rekombinationComboBox.addItem("Template");
 		GridBagConstraints gbc_rekombinationComboBox = new GridBagConstraints();
 		gbc_rekombinationComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_rekombinationComboBox.gridwidth = 2;
@@ -190,14 +207,14 @@ public class PropsPanel extends JPanel {
 		gbc_rekombinationComboBox.gridy = 4;
 		add(rekombinationComboBox, gbc_rekombinationComboBox);
 		
-		JLabel lblBitanzahl = new JLabel("Bitanzahl:");
+		final JLabel lblBitanzahl = new JLabel("Bitanzahl:");
 		GridBagConstraints gbc_lblBitanzahl = new GridBagConstraints();
 		gbc_lblBitanzahl.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBitanzahl.gridx = 4;
 		gbc_lblBitanzahl.gridy = 4;
 		add(lblBitanzahl, gbc_lblBitanzahl);
 		
-		JSpinner bitanzahlSpinner = new JSpinner();
+		final JSpinner bitanzahlSpinner = new JSpinner();
 		bitanzahlSpinner.setModel(new SpinnerNumberModel(model.getChainLength(), 4, 64, 1));
 		GridBagConstraints gbc_bitanzahlSpinner = new GridBagConstraints();
 		gbc_bitanzahlSpinner.insets = new Insets(0, 0, 5, 0);
@@ -213,7 +230,11 @@ public class PropsPanel extends JPanel {
 		gbc_lblElternselektion.gridy = 5;
 		add(lblElternselektion, gbc_lblElternselektion);
 		
-		JComboBox elternSelComboBox = new JComboBox();
+		final JComboBox<String> elternSelComboBox = new JComboBox<String>();
+		elternSelComboBox.addItem("Roulette");
+		elternSelComboBox.addItem("q-fach Turnier");
+		elternSelComboBox.addItem("q-stufig zweifach Turnier");
+		elternSelComboBox.setSelectedIndex(0);
 		GridBagConstraints gbc_elternSelComboBox = new GridBagConstraints();
 		gbc_elternSelComboBox.gridwidth = 3;
 		gbc_elternSelComboBox.insets = new Insets(0, 0, 5, 5);
@@ -222,7 +243,7 @@ public class PropsPanel extends JPanel {
 		gbc_elternSelComboBox.gridy = 5;
 		add(elternSelComboBox, gbc_elternSelComboBox);
 		
-		JLabel lblVerteilung = new JLabel("Verteilung:");
+		final JLabel lblVerteilung = new JLabel("Verteilung:");
 		GridBagConstraints gbc_lblVerteilung = new GridBagConstraints();
 		gbc_lblVerteilung.anchor = GridBagConstraints.EAST;
 		gbc_lblVerteilung.insets = new Insets(0, 0, 5, 5);
@@ -230,7 +251,9 @@ public class PropsPanel extends JPanel {
 		gbc_lblVerteilung.gridy = 6;
 		add(lblVerteilung, gbc_lblVerteilung);
 		
-		JComboBox verteilungComboBox = new JComboBox();
+		final JComboBox<String> verteilungComboBox = new JComboBox<String>();
+		verteilungComboBox.addItem("fitnessproportional");
+		verteilungComboBox.addItem("rangbasiert");
 		GridBagConstraints gbc_verteilungComboBox = new GridBagConstraints();
 		gbc_verteilungComboBox.gridwidth = 2;
 		gbc_verteilungComboBox.insets = new Insets(0, 0, 5, 5);
@@ -239,14 +262,16 @@ public class PropsPanel extends JPanel {
 		gbc_verteilungComboBox.gridy = 6;
 		add(verteilungComboBox, gbc_verteilungComboBox);
 		
-		JLabel lblMitglieder = new JLabel("Mitglieder:");
+		final JLabel lblMitglieder = new JLabel("Mitglieder:");
+		lblMitglieder.setEnabled(false);
 		GridBagConstraints gbc_lblMitglieder = new GridBagConstraints();
 		gbc_lblMitglieder.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMitglieder.gridx = 4;
 		gbc_lblMitglieder.gridy = 6;
 		add(lblMitglieder, gbc_lblMitglieder);
 		
-		JSpinner mitgliederSpinner = new JSpinner();
+		final JSpinner mitgliederSpinner = new JSpinner();
+		mitgliederSpinner.setEnabled(false);
 		mitgliederSpinner.setModel(new SpinnerNumberModel(model.memberCount, 4, 20, 1));
 		GridBagConstraints gbc_mitgliederSpinner = new GridBagConstraints();
 		gbc_mitgliederSpinner.insets = new Insets(0, 0, 5, 0);
@@ -254,7 +279,7 @@ public class PropsPanel extends JPanel {
 		gbc_mitgliederSpinner.gridy = 6;
 		add(mitgliederSpinner, gbc_mitgliederSpinner);
 		
-		JLabel lblDetermSelektion = new JLabel("determ. Selektion:");
+		JLabel lblDetermSelektion = new JLabel("Umweltselektion:");
 		GridBagConstraints gbc_lblDetermSelektion = new GridBagConstraints();
 		gbc_lblDetermSelektion.gridwidth = 2;
 		gbc_lblDetermSelektion.insets = new Insets(0, 0, 5, 5);
@@ -262,7 +287,10 @@ public class PropsPanel extends JPanel {
 		gbc_lblDetermSelektion.gridy = 7;
 		add(lblDetermSelektion, gbc_lblDetermSelektion);
 		
-		JComboBox determSelComboBox = new JComboBox();
+		final JComboBox<String> determSelComboBox = new JComboBox<String>();
+		determSelComboBox.addItem("plus");
+		determSelComboBox.addItem("komma");
+		determSelComboBox.setSelectedIndex(0);
 		GridBagConstraints gbc_determSelComboBox = new GridBagConstraints();
 		gbc_determSelComboBox.gridwidth = 2;
 		gbc_determSelComboBox.insets = new Insets(0, 0, 5, 5);
@@ -279,7 +307,10 @@ public class PropsPanel extends JPanel {
 		gbc_lblFitness.gridy = 8;
 		add(lblFitness, gbc_lblFitness);
 		
-		JComboBox fitnessComboBox = new JComboBox();
+		final JComboBox<String> fitnessComboBox = new JComboBox<String>();
+		fitnessComboBox.addItem("niedrigste");
+		fitnessComboBox.addItem("höchste");
+		fitnessComboBox.setSelectedIndex(0);
 		GridBagConstraints gbc_fitnessComboBox = new GridBagConstraints();
 		gbc_fitnessComboBox.gridwidth = 2;
 		gbc_fitnessComboBox.insets = new Insets(0, 0, 5, 5);
@@ -288,9 +319,100 @@ public class PropsPanel extends JPanel {
 		gbc_fitnessComboBox.gridy = 8;
 		add(fitnessComboBox, gbc_fitnessComboBox);
 		
-		JButton btnStarten = new JButton("Starten!");
+		final JButton btnStarten = new JButton("Starten!");
 		btnStarten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				model.maxGeneration = (int)generationSpinner.getValue();
+				model.permutationCount = (int)individuenSpinner.getValue();
+				model.childrenCount = (int)kinderSpinner.getValue();
+				model.geneCount = (int)geneSpinner.getValue();
+				model.setLowestValue((double)minWertSpinner.getValue());
+				model.setHeighestValue((double)maxWertSpinner.getValue());
+				if(0 == kodierungComboBox.getSelectedIndex()) {
+					model.setCodingType(CodingType.binary);
+					switch (rekombinationComboBox.getSelectedIndex()) {
+					case 0:
+						model.binaryRecombType = BinaryRecombinationType.random;
+						break;
+					case 1:
+						model.binaryRecombType = BinaryRecombinationType.onepoint;
+						break;
+					case 2:
+						model.binaryRecombType = BinaryRecombinationType.twopoint;
+						break;
+					case 3:
+						model.binaryRecombType = BinaryRecombinationType.template;
+						break;
+					default:
+						model.binaryRecombType = BinaryRecombinationType.random;
+						break;
+					}
+				} else {
+					model.setCodingType(CodingType.real);
+					switch (rekombinationComboBox.getSelectedIndex()) {
+					case 0:
+						model.realRecombType = RealRecombinationType.random;
+						break;
+					case 1:
+						model.realRecombType = RealRecombinationType.intermediat;
+						break;
+					case 2:
+						model.realRecombType = RealRecombinationType.arithmetic;
+						break;
+					default:
+						model.realRecombType = RealRecombinationType.random;
+						break;
+					}
+				}
+				model.useGrayCode = chckbxGraykodierung.isSelected();
+				model.setChainLength((int)bitanzahlSpinner.getValue());
+				switch (elternSelComboBox.getSelectedIndex()) {
+				case 0:
+					model.parentSelType = ParentSelectionType.rouletteSelection;
+					break;
+				case 1:
+					model.parentSelType = ParentSelectionType.qSelection;
+					break;
+				case 2:
+					model.parentSelType = ParentSelectionType.multibleQSelection;
+					break;
+				default:
+					model.parentSelType = ParentSelectionType.rouletteSelection;
+					break;
+				}
+				if(0 == verteilungComboBox.getSelectedIndex())
+					model.presumptType = PresumptionType.fitness;
+				else
+					model.presumptType = PresumptionType.ranking;
+				model.memberCount = (int)mitgliederSpinner.getValue();
+				if(0 == determSelComboBox.getSelectedIndex())
+					model.determSelType = DetermSelectionType.plusSelection;
+				else
+					model.determSelType = DetermSelectionType.commaSelection;
+				if(0 == fitnessComboBox.getSelectedIndex())
+					model.fitnessSelType = FitnessSelectionType.Lowest;
+				else
+					model.fitnessSelType = FitnessSelectionType.Highest;
+
+				generationSpinner.setEnabled(false);
+				individuenSpinner.setEnabled(false);
+				generationSpinner.setEnabled(false);
+				geneSpinner.setEnabled(false);
+				kinderSpinner.setEnabled(false);
+				minWertSpinner.setEnabled(false);
+				maxWertSpinner.setEnabled(false);
+				kodierungComboBox.setEnabled(false);
+				rekombinationComboBox.setEnabled(false);
+				chckbxGraykodierung.setEnabled(false);
+				bitanzahlSpinner.setEnabled(false);
+				elternSelComboBox.setEnabled(false);
+				verteilungComboBox.setEnabled(false);
+				mitgliederSpinner.setEnabled(false);
+				determSelComboBox.setEnabled(false);
+				fitnessComboBox.setEnabled(false);
+				
+				btnStarten.setEnabled(false);
+				btnStarten.setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_btnStarten = new GridBagConstraints();
@@ -299,6 +421,53 @@ public class PropsPanel extends JPanel {
 		gbc_btnStarten.gridy = 10;
 		add(btnStarten, gbc_btnStarten);
 
+		
+		kodierungComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(0 == kodierungComboBox.getSelectedIndex()) {
+					//binär ausgewählt
+					chckbxGraykodierung.setEnabled(true);
+					rekombinationComboBox.removeAllItems();
+					rekombinationComboBox.addItem("Zufällig");
+					rekombinationComboBox.addItem("Ein-Punkt");
+					rekombinationComboBox.addItem("Zwei-Punkt");
+					rekombinationComboBox.addItem("Template");
+					lblBitanzahl.setEnabled(true);
+					bitanzahlSpinner.setEnabled(true);
+					
+				} else {
+					//reel ausgewählt
+					chckbxGraykodierung.setEnabled(false);
+					rekombinationComboBox.removeAllItems();
+					rekombinationComboBox.addItem("Zufällig");
+					rekombinationComboBox.addItem("intermediäre");
+					rekombinationComboBox.addItem("arithmetische");
+					lblBitanzahl.setEnabled(false);
+					bitanzahlSpinner.setEnabled(false);
+					
+				}
+			}
+		});
+		
+		elternSelComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(0 == elternSelComboBox.getSelectedIndex()) {
+					//Roulette ausgewählt
+					lblVerteilung.setEnabled(true);
+					verteilungComboBox.setEnabled(true);
+					lblMitglieder.setEnabled(false);
+					mitgliederSpinner.setEnabled(false);
+				} else {
+					//Turnier ausgewählt
+					lblVerteilung.setEnabled(false);
+					verteilungComboBox.setEnabled(false);
+					lblMitglieder.setEnabled(true);
+					mitgliederSpinner.setEnabled(true);
+				}
+			}
+		});
 	}
 
 }
