@@ -24,50 +24,67 @@ public class Population {
 		generation.calcPermutationFitness();
 		parentSelection = new ParentSelection();
 	}
+	
+	public boolean nextGeneration() {
+		if(currentGeneration >= model.maxGeneration)
+			return false;
+		
+		//System.out.print((currentGeneration + 1) + ". Generation: ");
 
-	public void run() {//DetermSelectionType type) {
-		while (currentGeneration < model.maxGeneration) {
+		parentSelection.load(generation);
+		Generation children = new Generation(model.childrenCount);
+		Thread[] threads = new Thread[EvolutionSingleton.getInstance()
+				.getMaxThreads()];
 
-			System.out.print((currentGeneration + 1) + ". Generation: ");
-
-			parentSelection.load(generation);
-			Generation children = new Generation(model.childrenCount);
-			Thread[] threads = new Thread[EvolutionSingleton.getInstance()
-					.getMaxThreads()];
-
-			while (children.getPermutationCount() < model.childrenCount) {
-				for (int i = 0; i < threads.length; i++) {
-					if (threads[i] != null && !threads[i].isAlive())
-						threads[i] = null;
-					if (threads[i] == null) {
-						threads[i] = new Thread(new ChildrenCreator(children));
-						threads[i].start();
-						break;
-					}
+		while (children.getPermutationCount() < model.childrenCount) {
+			for (int i = 0; i < threads.length; i++) {
+				if (threads[i] != null && !threads[i].isAlive())
+					threads[i] = null;
+				if (threads[i] == null) {
+					threads[i] = new Thread(new ChildrenCreator(children));
+					threads[i].start();
+					break;
 				}
 			}
-
-			for (Thread thread : threads) {
-				if (thread != null)
-					try {
-						thread.join();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-
-			currentGeneration++;
-
-			if (model.determSelType == DetermSelectionType.commaSelection)
-				generation.setPermutations(children.getPermutations());
-			else
-				generation.addGeneration(children);
-			EnvironmentalSelection.determSelection(generation);
-
-			System.out.println("fertig");
-			// generation.printGeneration();
 		}
+
+		for (Thread thread : threads) {
+			if (thread != null)
+				try {
+					thread.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+
+		if (model.determSelType == DetermSelectionType.commaSelection)
+			generation.setPermutations(children.getPermutations());
+		else
+			generation.addGeneration(children);
+		EnvironmentalSelection.determSelection(generation);
+
+		currentGeneration++;
+		
+		//System.out.println("fertig");
+		// generation.printGeneration();
+		
+		return true;
+	}
+
+	public void run() {
+		while (nextGeneration()) {
+			
+		}
+	}
+	
+	public Result getResult() {
+		Result result = new Result();
+		result.generation = currentGeneration;
+		result.bestFitness = generation.getLowestFitness();
+		result.worstFitness = generation.getHighestFitness();
+		result.averageFitness = generation.calcFitness() / generation.getPermutationCount();
+		return result;
 	}
 
 	public Permutation getBestPermutation() {

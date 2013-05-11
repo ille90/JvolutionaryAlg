@@ -54,7 +54,7 @@ public class MainFrame extends JFrame {
 		activeSession = -1;
 		sessions = new ArrayList<>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 50, 800, 500);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -104,6 +104,7 @@ public class MainFrame extends JFrame {
 				contentPane.remove(sessions.get(activeSession));
 				activeSession = sessionComboBox.getSelectedIndex();
 				contentPane.add(sessions.get(activeSession), BorderLayout.CENTER);
+				contentPane.repaint();
 			}
 		});
 		

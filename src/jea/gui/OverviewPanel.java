@@ -3,16 +3,20 @@ package jea.gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
+
+import jea.alg.Result;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYDotRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.SeriesDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -21,11 +25,16 @@ public class OverviewPanel extends JPanel {
 
 	SeriesDataset bestInd;
 	JFreeChart bestIndividChart;
+	ArrayList<XYSeries> bestFitness;
+	XYSeriesCollection bestFitnessColl;
 
 	/**
 	 * Create the panel.
 	 */
 	public OverviewPanel() {
+		bestFitness = new ArrayList<>();
+		bestFitnessColl = new XYSeriesCollection();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 150, 0 };
 		gridBagLayout.rowHeights = new int[] { 0 };
@@ -45,27 +54,10 @@ public class OverviewPanel extends JPanel {
 		btnbestInd.setSelected(true);
 		scrollPane.setColumnHeaderView(btnbestInd);
 
-		XYSeries series1 = new XYSeries("Punkte1");
-		series1.add(0, 0);
-		series1.add(1, 1);
-		series1.add(2, 1);
-		series1.add(3, 2);
-
-		XYSeries series2 = new XYSeries("Punkte2");
-		series2.add(1, 2);
-		series2.add(2, 3);
-		series2.add(3, 4);
-
-		// Hinzufuegen von series1 und series2 zu der Datenmenge dataset
-		XYSeriesCollection dataset2 = new XYSeriesCollection();
-		dataset2.addSeries(series1);
-		dataset2.addSeries(series2);
-		XYDotRenderer dot = new XYDotRenderer();
-		dot.setDotHeight(5);
-		dot.setDotWidth(5);
-		NumberAxis xax = new NumberAxis("x");
-		NumberAxis yax = new NumberAxis("y");
-		XYPlot plot = new XYPlot(dataset2, xax, yax, dot);
+		XYLineAndShapeRenderer dot = new XYLineAndShapeRenderer();
+		NumberAxis xax = new NumberAxis("Generation");
+		NumberAxis yax = new NumberAxis("Fitness");
+		XYPlot plot = new XYPlot(bestFitnessColl, xax, yax, dot);
 		bestIndividChart = new JFreeChart(plot);
 
 		ChartPanel chartPanel = new ChartPanel(bestIndividChart);
@@ -76,5 +68,14 @@ public class OverviewPanel extends JPanel {
 		gbc_panel.gridy = 0;
 		add(chartPanel, gbc_panel);
 	}
-
+	
+	public void addPopulation(int id, String name) {
+		XYSeries newSeries = new XYSeries(name);
+		bestFitness.add(id, newSeries);
+		bestFitnessColl.addSeries(newSeries);
+	}
+	
+	public void addResult(int id, Result result) {
+		bestFitness.get(id).add(result.generation, result.bestFitness);
+	}
 }

@@ -28,15 +28,19 @@ import jea.alg.selection.PresumptionType;
 
 public class PropsPanel extends JPanel {
 
+	int id;
 	Model model;
+	SessionPanel session;
 	private JTextField funktionTextField;
 	
 	/**
 	 * Create the panel.
 	 */
-	public PropsPanel(Model newModel) {
-		
+	public PropsPanel(int id, Model newModel, SessionPanel session) {
+		this.id = id;
 		this.model = newModel;
+		this.session = session;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 28, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -394,6 +398,9 @@ public class PropsPanel extends JPanel {
 				else
 					model.fitnessSelType = FitnessSelectionType.Highest;
 
+				if(!PropsPanel.this.session.startPopulation(PropsPanel.this.id))
+					return;
+				
 				generationSpinner.setEnabled(false);
 				individuenSpinner.setEnabled(false);
 				generationSpinner.setEnabled(false);
