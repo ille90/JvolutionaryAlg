@@ -51,4 +51,9 @@ public class AckleyFunction implements FitnessFunction{
 		calcFitness(permutation);
 		System.out.println("Fitness: " + permutation.getFitness());
 	}
+	
+	@Override
+	public String getName() {
+		return "Ackley";
+	}
 }

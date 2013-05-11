@@ -52,4 +52,9 @@ public class GriewankFunction implements FitnessFunction{
 		calcFitness(permutation);
 		System.out.println("Fitness: " + permutation.getFitness());
 	}
+	
+	@Override
+	public String getName() {
+		return "Griewank";
+	}
 }

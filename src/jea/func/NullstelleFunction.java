@@ -56,4 +56,9 @@ public class NullstelleFunction implements FitnessFunction{
 		calcFitness(permutation);
 		System.out.println("Fitness: " + permutation.getFitness());
 	}
+	
+	@Override
+	public String getName() {
+		return "Nullstellen";
+	}
 }

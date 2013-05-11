@@ -6,4 +6,5 @@ public interface FitnessFunction {
 	public Double getHeighestValue();
 	public void calcFitness(Permutation permutation);
 	public void printPermutationInfo(Permutation permutation);
+	public String getName();
 }
