@@ -25,6 +25,7 @@ import jea.func.AckleyFunction;
 import jea.func.GriewankFunction;
 import jea.func.NullstelleFunction;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;

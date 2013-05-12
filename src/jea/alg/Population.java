@@ -81,6 +81,7 @@ public class Population {
 	public Result getResult() {
 		Result result = new Result();
 		result.generation = currentGeneration;
+		result.bestPermutation = generation.getBestPermutation().toString();
 		result.bestFitness = generation.getLowestFitness();
 		result.worstFitness = generation.getHighestFitness();
 		result.averageFitness = generation.calcFitness() / generation.getPermutationCount();

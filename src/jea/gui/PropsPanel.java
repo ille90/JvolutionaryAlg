@@ -26,6 +26,7 @@ import jea.alg.selection.FitnessSelectionType;
 import jea.alg.selection.ParentSelectionType;
 import jea.alg.selection.PresumptionType;
 
+@SuppressWarnings("serial")
 public class PropsPanel extends JPanel {
 
 	int id;

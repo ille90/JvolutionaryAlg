@@ -1,20 +1,22 @@
 package jea.gui;
 
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import jea.alg.EvolutionSingleton;
 import jea.alg.Model;
 import jea.alg.Population;
 
+@SuppressWarnings("serial")
 public class SessionPanel extends JPanel {
 
 	int populationen;
 	JTabbedPane tabbedPane;
 	OverviewPanel overviewPanel;
-	ArrayList<PropsPanel> props;
+	ArrayList<PopulationPanel> props;
 	
 	Thread workingThread;
 	
@@ -34,11 +36,11 @@ public class SessionPanel extends JPanel {
 	}
 	
 	public void addPropsPanel(Model model) {
-		PropsPanel propsPanel = new PropsPanel(populationen, model, this);
-		props.add(propsPanel);
+		PopulationPanel populationPanel = new PopulationPanel(populationen, model, this);
+		props.add(populationPanel);
 		++populationen;
-		tabbedPane.addTab("Population " + populationen, null, propsPanel, null);
-		tabbedPane.setSelectedComponent(propsPanel);
+		tabbedPane.addTab("Population " + populationen, null, populationPanel, null);
+		tabbedPane.setSelectedComponent(populationPanel);
 	}
 	
 	public boolean startPopulation(int id) {
@@ -62,15 +64,19 @@ public class SessionPanel extends JPanel {
 		
 		@Override
 		public void run() {
-			EvolutionSingleton.getInstance().setModel(props.get(id).model);
+			PopulationPanel pPanel = props.get(id);
+			EvolutionSingleton.getInstance().setModel(pPanel.propsPanel.model);
 			overviewPanel.addPopulation(id, "Population " + (id + 1));
 			Population population = new Population();
 			population.init();
 			overviewPanel.addResult(id, population.getResult());
+			pPanel.addInfo(population.getResult());
 			while (population.nextGeneration()) {
 				overviewPanel.addResult(id, population.getResult());
+				pPanel.addInfo(population.getResult());
 			}
 			overviewPanel.addResult(id, population.getResult());
+			pPanel.addInfo(population.getResult());
 		}
 	}
 }
