@@ -49,18 +49,18 @@ public class Model {
 		this.fitnessFunc = fitnessFunc;
 		
 		//Default Values
-		maxGeneration = 20;
-		permutationCount = 50;
-		childrenCount = 100;
+		maxGeneration = 50;
+		permutationCount = 200;
+		childrenCount = 300;
 		
 		codingType = CodingType.binary;
 		useGrayCode = false;
-		chainLength = 10;
+		chainLength = 16;
 		
 		binaryRecombType = BinaryRecombinationType.random;
 		realRecombType = RealRecombinationType.random;
 		
-		geneCount = 5;
+		geneCount = 15;
 		if(fitnessFunc.getLowestValue() == null)
 			lowestValue = -512;
 		else
@@ -71,10 +71,10 @@ public class Model {
 			heighestValue = fitnessFunc.getHeighestValue();
 		
 		parentSelType = ParentSelectionType.rouletteSelection;
-		presumptType = PresumptionType.fitness;
+		presumptType = PresumptionType.ranking;
 		memberCount = 5;
 		
-		mutation = 0.5;
+		mutation = 0.7;
 		
 		fitnessSelType = FitnessSelectionType.Lowest;
 		
