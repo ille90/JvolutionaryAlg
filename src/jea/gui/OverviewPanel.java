@@ -82,17 +82,22 @@ public class OverviewPanel extends JPanel {
 		btnWorstInd.setSelected(false);
 		leftPanel.add(btnWorstInd, cons);
 
-		XYLineAndShapeRenderer dot = new XYLineAndShapeRenderer();
+		XYLineAndShapeRenderer bestDot = new XYLineAndShapeRenderer();
 		NumberAxis xax = new NumberAxis("Generation");
 		NumberAxis yax = new NumberAxis("Fitness");
 		
-		XYPlot bestFitnessPlot = new XYPlot(bestFitnessColl, xax, yax, dot);
+		XYPlot bestFitnessPlot = new XYPlot(bestFitnessColl, xax, yax, bestDot);
 		bestIndividChart = new JFreeChart(bestFitnessPlot);
 		
-		XYPlot worstFitnessPlot = new XYPlot(worstFitnessColl, xax, yax, dot);
+		XYLineAndShapeRenderer worstDot = new XYLineAndShapeRenderer();
+		NumberAxis xax2 = new NumberAxis("Generation");
+		NumberAxis yax2 = new NumberAxis("Fitness");
+		
+		XYPlot worstFitnessPlot = new XYPlot(worstFitnessColl, xax2, yax2, worstDot);
 		worstIndividChart = new JFreeChart(worstFitnessPlot);
 
-		final ChartPanel chartPanel = new ChartPanel(bestIndividChart);
+		final ChartPanel bestChartPanel = new ChartPanel(bestIndividChart);
+		final ChartPanel worstChartPanel = new ChartPanel(worstIndividChart);
 
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -101,14 +106,17 @@ public class OverviewPanel extends JPanel {
 		//add(chartPanel, gbc_panel);
 		add(rightPanel, gbc_panel);
 		rightPanel.setLayout(new BorderLayout());
-		rightPanel.add(chartPanel, BorderLayout.CENTER, 0);
+		rightPanel.add(bestChartPanel, BorderLayout.CENTER, 0);
 		
 		btnbestInd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				btnWorstInd.setSelected(false);
 				btnbestInd.setSelected(true);
-				chartPanel.setChart(bestIndividChart);
+				//bestChartPanel.setChart(bestIndividChart);
+				rightPanel.remove(0);
+				rightPanel.add(bestChartPanel, BorderLayout.CENTER, 0);
+				rightPanel.repaint();
 			}
 		});
 		
@@ -117,7 +125,10 @@ public class OverviewPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				btnbestInd.setSelected(false);
 				btnWorstInd.setSelected(true);
-				chartPanel.setChart(worstIndividChart);
+				//bestChartPanel.setChart(worstIndividChart);
+				rightPanel.remove(0);
+				rightPanel.add(worstChartPanel, BorderLayout.CENTER, 0);
+				rightPanel.repaint();
 			}
 		});
 	}
