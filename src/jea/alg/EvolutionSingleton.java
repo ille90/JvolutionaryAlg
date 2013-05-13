@@ -95,6 +95,14 @@ public class EvolutionSingleton {
 		return model.realRecombType;
 	}
 	
+	public double getMutation() {
+		if(model.mutation > 1.0)
+			model.mutation = 1.0;
+		else if(model.mutation < 0.0)
+			model.mutation = 0.0;
+		return model.mutation;
+	}
+	
 	public double getGranularity() {
 		return model.getGranularity();
 	}

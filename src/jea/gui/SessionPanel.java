@@ -75,8 +75,7 @@ public class SessionPanel extends JPanel {
 				overviewPanel.addResult(id, population.getResult());
 				pPanel.addInfo(population.getResult());
 			}
-			overviewPanel.addResult(id, population.getResult());
-			pPanel.addInfo(population.getResult());
+			pPanel.setResult(population.getResult());
 		}
 	}
 }

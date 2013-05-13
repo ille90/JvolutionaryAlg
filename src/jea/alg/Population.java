@@ -111,7 +111,7 @@ public class Population {
 			Permutation[] tmpChildren = EvolutionSingleton.getInstance()
 					.getCoding().recombination(father, mother);
 			for (Permutation child : tmpChildren) {
-				if(new Random().nextBoolean())
+				if(EvolutionSingleton.getInstance().getMutation() >= new Random().nextDouble())
 					EvolutionSingleton.getInstance().getCoding().mutation(child);
 				child.calcFitness();
 				children.addPermutation(child);

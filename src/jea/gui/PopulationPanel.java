@@ -21,10 +21,13 @@ public class PopulationPanel extends JPanel {
 
 	JPanel rightPanel;
 	PropsPanel propsPanel;
-	JPanel infoPanel;
+	
+	JTextArea resultText;
+	
 	JTextArea infoText;
 	
 	JToggleButton tglbtnEinstellungen;
+	JToggleButton tglbtnErgebniss;
 	JToggleButton tglbtnInformation;
 	
 	GridBagConstraints gbc_panel;
@@ -35,12 +38,13 @@ public class PopulationPanel extends JPanel {
 	public PopulationPanel(int id, Model newModel, SessionPanel session) {
 		rightPanel = new JPanel();
 		propsPanel = new PropsPanel(id, newModel, session);
-		infoPanel = new JPanel();
 		infoText = new JTextArea();
-		infoPanel.add(infoText);
-		final JScrollPane infoScrollPane = new JScrollPane(infoPanel);
+		final JScrollPane infoScrollPane = new JScrollPane(infoText);
 		infoText.setEditable(false);
-		//infoScrollPane.add(infoText);
+		
+		resultText = new JTextArea();
+		final JScrollPane resultScrollPane = new JScrollPane(resultText);
+		resultText.setEditable(false);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 200, 0 };
@@ -70,6 +74,10 @@ public class PopulationPanel extends JPanel {
 		leftPanel.add(tglbtnEinstellungen, cons);
 		tglbtnEinstellungen.setSelected(true);
 		
+		tglbtnErgebniss = new JToggleButton("Ergebniss");
+		tglbtnErgebniss.setAlignmentX(Component.CENTER_ALIGNMENT);
+		leftPanel.add(tglbtnErgebniss, cons);
+		
 		tglbtnInformation = new JToggleButton("Informationen");
 		tglbtnInformation.setAlignmentX(Component.CENTER_ALIGNMENT);
 		leftPanel.add(tglbtnInformation, cons);
@@ -86,9 +94,22 @@ public class PopulationPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tglbtnEinstellungen.setSelected(true);
+				tglbtnErgebniss.setSelected(false);
 				tglbtnInformation.setSelected(false);
 				rightPanel.remove(0);
 				rightPanel.add(propsPanel, BorderLayout.CENTER, 0);
+				rightPanel.repaint();
+			}
+		});
+		
+		tglbtnErgebniss.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				tglbtnErgebniss.setSelected(true);
+				tglbtnEinstellungen.setSelected(false);
+				tglbtnInformation.setSelected(false);
+				rightPanel.remove(0);
+				rightPanel.add(resultScrollPane, BorderLayout.CENTER, 0);
 				rightPanel.repaint();
 			}
 		});
@@ -98,11 +119,10 @@ public class PopulationPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				tglbtnInformation.setSelected(true);
 				tglbtnEinstellungen.setSelected(false);
+				tglbtnErgebniss.setSelected(false);
 				rightPanel.remove(0);
 				rightPanel.add(infoScrollPane, BorderLayout.CENTER, 0);
 				rightPanel.repaint();
-				infoScrollPane.repaint();
-				infoText.repaint();
 			}
 		});
 	}
@@ -114,5 +134,8 @@ public class PopulationPanel extends JPanel {
 		infoText.append("\nDurchschnitt: " + result.averageFitness + "\n\n");
 		infoText.repaint();
 	}
-
+	
+	public void setResult(Result result) {
+		resultText.setText("Bestes Individuum nach " + result.generation + " Generationen:\n\n" + result.bestPermutation);
+	}
 }

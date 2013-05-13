@@ -36,6 +36,8 @@ public class Model {
 	public ParentSelectionType parentSelType;
 	public PresumptionType presumptType;
 	public int memberCount;
+	
+	public double mutation;
 
 	public FitnessSelectionType fitnessSelType;
 	
@@ -71,6 +73,8 @@ public class Model {
 		parentSelType = ParentSelectionType.rouletteSelection;
 		presumptType = PresumptionType.fitness;
 		memberCount = 5;
+		
+		mutation = 0.5;
 		
 		fitnessSelType = FitnessSelectionType.Lowest;
 		

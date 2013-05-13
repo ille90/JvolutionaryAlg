@@ -62,7 +62,7 @@ public class PropsPanel extends JPanel {
 		funktionTextField.setEditable(false);
 		GridBagConstraints gbc_funktionTextField = new GridBagConstraints();
 		gbc_funktionTextField.gridwidth = 4;
-		gbc_funktionTextField.insets = new Insets(0, 0, 5, 5);
+		gbc_funktionTextField.insets = new Insets(0, 0, 5, 0);
 		gbc_funktionTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_funktionTextField.gridx = 2;
 		gbc_funktionTextField.gridy = 0;
@@ -229,7 +229,6 @@ public class PropsPanel extends JPanel {
 		
 		JLabel lblElternselektion = new JLabel("Elternselektion:");
 		GridBagConstraints gbc_lblElternselektion = new GridBagConstraints();
-		gbc_lblElternselektion.gridwidth = 2;
 		gbc_lblElternselektion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblElternselektion.gridx = 0;
 		gbc_lblElternselektion.gridy = 5;
@@ -240,11 +239,12 @@ public class PropsPanel extends JPanel {
 		elternSelComboBox.addItem("q-fach Turnier");
 		elternSelComboBox.addItem("q-stufig zweifach Turnier");
 		elternSelComboBox.setSelectedIndex(0);
+		
 		GridBagConstraints gbc_elternSelComboBox = new GridBagConstraints();
 		gbc_elternSelComboBox.gridwidth = 3;
 		gbc_elternSelComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_elternSelComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_elternSelComboBox.gridx = 2;
+		gbc_elternSelComboBox.gridx = 1;
 		gbc_elternSelComboBox.gridy = 5;
 		add(elternSelComboBox, gbc_elternSelComboBox);
 		
@@ -323,6 +323,21 @@ public class PropsPanel extends JPanel {
 		gbc_fitnessComboBox.gridx = 2;
 		gbc_fitnessComboBox.gridy = 8;
 		add(fitnessComboBox, gbc_fitnessComboBox);
+
+		JLabel lblMutationswslkt = new JLabel("Mutationswslkt.:");
+		GridBagConstraints gbc_lblMutationswslkt = new GridBagConstraints();
+		gbc_lblMutationswslkt.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMutationswslkt.gridx = 0;
+		gbc_lblMutationswslkt.gridy = 9;
+		add(lblMutationswslkt, gbc_lblMutationswslkt);
+		
+		final JSpinner mutationSpinner = new JSpinner(new SpinnerNumberModel(model.mutation, 0.0, 1.0, 0.01));
+		GridBagConstraints gbc_spinner = new GridBagConstraints();
+		gbc_spinner.gridwidth = 2;
+		gbc_spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_spinner.gridx = 1;
+		gbc_spinner.gridy = 9;
+		add(mutationSpinner, gbc_spinner);
 		
 		final JButton btnStarten = new JButton("Starten!");
 		btnStarten.addActionListener(new ActionListener() {
@@ -398,6 +413,8 @@ public class PropsPanel extends JPanel {
 					model.fitnessSelType = FitnessSelectionType.Lowest;
 				else
 					model.fitnessSelType = FitnessSelectionType.Highest;
+				
+				model.mutation = (double) mutationSpinner.getValue();
 
 				if(!PropsPanel.this.session.startPopulation(PropsPanel.this.id))
 					return;
@@ -418,11 +435,13 @@ public class PropsPanel extends JPanel {
 				mitgliederSpinner.setEnabled(false);
 				determSelComboBox.setEnabled(false);
 				fitnessComboBox.setEnabled(false);
+				mutationSpinner.setEnabled(false);
 				
 				btnStarten.setEnabled(false);
 				btnStarten.setVisible(false);
 			}
 		});
+		
 		GridBagConstraints gbc_btnStarten = new GridBagConstraints();
 		gbc_btnStarten.gridwidth = 2;
 		gbc_btnStarten.gridx = 4;
