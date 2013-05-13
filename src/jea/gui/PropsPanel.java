@@ -44,9 +44,9 @@ public class PropsPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 28, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel lblFunktion = new JLabel("Funktion:");
@@ -62,7 +62,7 @@ public class PropsPanel extends JPanel {
 		funktionTextField.setEditable(false);
 		GridBagConstraints gbc_funktionTextField = new GridBagConstraints();
 		gbc_funktionTextField.gridwidth = 4;
-		gbc_funktionTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_funktionTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_funktionTextField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_funktionTextField.gridx = 2;
 		gbc_funktionTextField.gridy = 0;
@@ -71,6 +71,7 @@ public class PropsPanel extends JPanel {
 		
 		JLabel lblGenerationen = new JLabel("Generationen:");
 		GridBagConstraints gbc_lblGenerationen = new GridBagConstraints();
+		gbc_lblGenerationen.anchor = GridBagConstraints.EAST;
 		gbc_lblGenerationen.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGenerationen.gridx = 0;
 		gbc_lblGenerationen.gridy = 1;
@@ -86,6 +87,7 @@ public class PropsPanel extends JPanel {
 		
 		JLabel lblIndividuen = new JLabel("Individuen:");
 		GridBagConstraints gbc_lblIndividuen = new GridBagConstraints();
+		gbc_lblIndividuen.anchor = GridBagConstraints.EAST;
 		gbc_lblIndividuen.insets = new Insets(0, 0, 5, 5);
 		gbc_lblIndividuen.gridx = 2;
 		gbc_lblIndividuen.gridy = 1;
@@ -101,21 +103,23 @@ public class PropsPanel extends JPanel {
 		
 		JLabel lblKinder = new JLabel("Kinder:");
 		GridBagConstraints gbc_lblKinder = new GridBagConstraints();
+		gbc_lblKinder.anchor = GridBagConstraints.EAST;
 		gbc_lblKinder.insets = new Insets(0, 0, 5, 5);
-		gbc_lblKinder.gridx = 4;
-		gbc_lblKinder.gridy = 1;
+		gbc_lblKinder.gridx = 2;
+		gbc_lblKinder.gridy = 2;
 		add(lblKinder, gbc_lblKinder);
 		
 		final JSpinner kinderSpinner = new JSpinner();
 		kinderSpinner.setModel(new SpinnerNumberModel(model.childrenCount, 5, 1000, 5));
 		GridBagConstraints gbc_kinderSpinner = new GridBagConstraints();
-		gbc_kinderSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_kinderSpinner.gridx = 5;
-		gbc_kinderSpinner.gridy = 1;
+		gbc_kinderSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_kinderSpinner.gridx = 3;
+		gbc_kinderSpinner.gridy = 2;
 		add(kinderSpinner, gbc_kinderSpinner);
 		
 		JLabel lblGene = new JLabel("Gene:");
 		GridBagConstraints gbc_lblGene = new GridBagConstraints();
+		gbc_lblGene.anchor = GridBagConstraints.EAST;
 		gbc_lblGene.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGene.gridx = 0;
 		gbc_lblGene.gridy = 2;
@@ -131,9 +135,10 @@ public class PropsPanel extends JPanel {
 		
 		JLabel lblMinWert = new JLabel("min. Wert:");
 		GridBagConstraints gbc_lblMinWert = new GridBagConstraints();
+		gbc_lblMinWert.anchor = GridBagConstraints.EAST;
 		gbc_lblMinWert.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMinWert.gridx = 2;
-		gbc_lblMinWert.gridy = 2;
+		gbc_lblMinWert.gridx = 4;
+		gbc_lblMinWert.gridy = 1;
 		add(lblMinWert, gbc_lblMinWert);
 		
 		final JSpinner minWertSpinner = new JSpinner();
@@ -141,13 +146,15 @@ public class PropsPanel extends JPanel {
 		if(model.getFitnessFunction().getLowestValue() != null)
 			minWertSpinner.setEnabled(false);
 		GridBagConstraints gbc_minWertSpinner = new GridBagConstraints();
+		gbc_minWertSpinner.anchor = GridBagConstraints.WEST;
 		gbc_minWertSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_minWertSpinner.gridx = 3;
-		gbc_minWertSpinner.gridy = 2;
+		gbc_minWertSpinner.gridx = 5;
+		gbc_minWertSpinner.gridy = 1;
 		add(minWertSpinner, gbc_minWertSpinner);
 		
 		JLabel lblMaxWert = new JLabel("max. Wert:");
 		GridBagConstraints gbc_lblMaxWert = new GridBagConstraints();
+		gbc_lblMaxWert.anchor = GridBagConstraints.EAST;
 		gbc_lblMaxWert.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMaxWert.gridx = 4;
 		gbc_lblMaxWert.gridy = 2;
@@ -158,17 +165,27 @@ public class PropsPanel extends JPanel {
 		if(model.getFitnessFunction().getHeighestValue() != null)
 			maxWertSpinner.setEnabled(false);
 		GridBagConstraints gbc_maxWertSpinner = new GridBagConstraints();
-		gbc_maxWertSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_maxWertSpinner.anchor = GridBagConstraints.WEST;
+		gbc_maxWertSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_maxWertSpinner.gridx = 5;
 		gbc_maxWertSpinner.gridy = 2;
 		add(maxWertSpinner, gbc_maxWertSpinner);
+		
+		JPanel panel_1 = new JPanel();
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.gridwidth = 6;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 3;
+		add(panel_1, gbc_panel_1);
 		
 		JLabel lblKodierung = new JLabel("Kodierung:");
 		GridBagConstraints gbc_lblKodierung = new GridBagConstraints();
 		gbc_lblKodierung.anchor = GridBagConstraints.EAST;
 		gbc_lblKodierung.insets = new Insets(0, 0, 5, 5);
 		gbc_lblKodierung.gridx = 0;
-		gbc_lblKodierung.gridy = 3;
+		gbc_lblKodierung.gridy = 4;
 		add(lblKodierung, gbc_lblKodierung);
 		
 		final JComboBox<String> kodierungComboBox = new JComboBox<String>();
@@ -180,58 +197,75 @@ public class PropsPanel extends JPanel {
 		gbc_kodierungComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_kodierungComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_kodierungComboBox.gridx = 1;
-		gbc_kodierungComboBox.gridy = 3;
+		gbc_kodierungComboBox.gridy = 4;
 		add(kodierungComboBox, gbc_kodierungComboBox);
+		
+				
 		
 		final JCheckBox chckbxGraykodierung = new JCheckBox("Graykodierung");
 		chckbxGraykodierung.setSelected(false);
 		GridBagConstraints gbc_chckbxGraykodierung = new GridBagConstraints();
+		gbc_chckbxGraykodierung.anchor = GridBagConstraints.WEST;
 		gbc_chckbxGraykodierung.gridwidth = 2;
-		gbc_chckbxGraykodierung.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxGraykodierung.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxGraykodierung.gridx = 4;
-		gbc_chckbxGraykodierung.gridy = 3;
+		gbc_chckbxGraykodierung.gridy = 4;
 		add(chckbxGraykodierung, gbc_chckbxGraykodierung);
-		
-		JLabel lblRekombination = new JLabel("Rekombination:");
-		GridBagConstraints gbc_lblRekombination = new GridBagConstraints();
-		gbc_lblRekombination.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRekombination.gridx = 0;
-		gbc_lblRekombination.gridy = 4;
-		add(lblRekombination, gbc_lblRekombination);
 		
 		final JComboBox<String> rekombinationComboBox = new JComboBox<String>();
 		rekombinationComboBox.addItem("Zufällig");
 		rekombinationComboBox.addItem("Ein-Punkt");
 		rekombinationComboBox.addItem("Zwei-Punkt");
 		rekombinationComboBox.addItem("Template");
+
+		
+		JLabel lblRekombination = new JLabel("Rekombination:");
+		GridBagConstraints gbc_lblRekombination = new GridBagConstraints();
+		gbc_lblRekombination.anchor = GridBagConstraints.EAST;
+		gbc_lblRekombination.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRekombination.gridx = 0;
+		gbc_lblRekombination.gridy = 5;
+		add(lblRekombination, gbc_lblRekombination);
 		GridBagConstraints gbc_rekombinationComboBox = new GridBagConstraints();
 		gbc_rekombinationComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_rekombinationComboBox.gridwidth = 2;
 		gbc_rekombinationComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_rekombinationComboBox.gridx = 1;
-		gbc_rekombinationComboBox.gridy = 4;
+		gbc_rekombinationComboBox.gridy = 5;
 		add(rekombinationComboBox, gbc_rekombinationComboBox);
 		
 		final JLabel lblBitanzahl = new JLabel("Bitanzahl:");
 		GridBagConstraints gbc_lblBitanzahl = new GridBagConstraints();
+		gbc_lblBitanzahl.anchor = GridBagConstraints.EAST;
 		gbc_lblBitanzahl.insets = new Insets(0, 0, 5, 5);
 		gbc_lblBitanzahl.gridx = 4;
-		gbc_lblBitanzahl.gridy = 4;
+		gbc_lblBitanzahl.gridy = 5;
 		add(lblBitanzahl, gbc_lblBitanzahl);
 		
 		final JSpinner bitanzahlSpinner = new JSpinner();
 		bitanzahlSpinner.setModel(new SpinnerNumberModel(model.getChainLength(), 4, 64, 1));
 		GridBagConstraints gbc_bitanzahlSpinner = new GridBagConstraints();
-		gbc_bitanzahlSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_bitanzahlSpinner.anchor = GridBagConstraints.WEST;
+		gbc_bitanzahlSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_bitanzahlSpinner.gridx = 5;
-		gbc_bitanzahlSpinner.gridy = 4;
+		gbc_bitanzahlSpinner.gridy = 5;
 		add(bitanzahlSpinner, gbc_bitanzahlSpinner);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 6;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 6;
+		add(panel, gbc_panel);
 		
 		JLabel lblElternselektion = new JLabel("Elternselektion:");
 		GridBagConstraints gbc_lblElternselektion = new GridBagConstraints();
+		gbc_lblElternselektion.anchor = GridBagConstraints.EAST;
 		gbc_lblElternselektion.insets = new Insets(0, 0, 5, 5);
 		gbc_lblElternselektion.gridx = 0;
-		gbc_lblElternselektion.gridy = 5;
+		gbc_lblElternselektion.gridy = 7;
 		add(lblElternselektion, gbc_lblElternselektion);
 		
 		final JComboBox<String> elternSelComboBox = new JComboBox<String>();
@@ -245,99 +279,157 @@ public class PropsPanel extends JPanel {
 		gbc_elternSelComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_elternSelComboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_elternSelComboBox.gridx = 1;
-		gbc_elternSelComboBox.gridy = 5;
+		gbc_elternSelComboBox.gridy = 7;
 		add(elternSelComboBox, gbc_elternSelComboBox);
 		
-		final JLabel lblVerteilung = new JLabel("Verteilung:");
-		GridBagConstraints gbc_lblVerteilung = new GridBagConstraints();
-		gbc_lblVerteilung.anchor = GridBagConstraints.EAST;
-		gbc_lblVerteilung.insets = new Insets(0, 0, 5, 5);
-		gbc_lblVerteilung.gridx = 0;
-		gbc_lblVerteilung.gridy = 6;
-		add(lblVerteilung, gbc_lblVerteilung);
+		kodierungComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(0 == kodierungComboBox.getSelectedIndex()) {
+					//binär ausgewählt
+					chckbxGraykodierung.setEnabled(true);
+					rekombinationComboBox.removeAllItems();
+					rekombinationComboBox.addItem("Zufällig");
+					rekombinationComboBox.addItem("Ein-Punkt");
+					rekombinationComboBox.addItem("Zwei-Punkt");
+					rekombinationComboBox.addItem("Template");
+					lblBitanzahl.setEnabled(true);
+					bitanzahlSpinner.setEnabled(true);
+					
+				} else {
+					//reel ausgewählt
+					chckbxGraykodierung.setEnabled(false);
+					rekombinationComboBox.removeAllItems();
+					rekombinationComboBox.addItem("Zufällig");
+					rekombinationComboBox.addItem("intermediäre");
+					rekombinationComboBox.addItem("arithmetische");
+					lblBitanzahl.setEnabled(false);
+					bitanzahlSpinner.setEnabled(false);
+					
+				}
+			}
+		});
+
 		
-		final JComboBox<String> verteilungComboBox = new JComboBox<String>();
-		verteilungComboBox.addItem("fitnessproportional");
-		verteilungComboBox.addItem("rangbasiert");
-		GridBagConstraints gbc_verteilungComboBox = new GridBagConstraints();
-		gbc_verteilungComboBox.gridwidth = 2;
-		gbc_verteilungComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_verteilungComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_verteilungComboBox.gridx = 1;
-		gbc_verteilungComboBox.gridy = 6;
-		add(verteilungComboBox, gbc_verteilungComboBox);
+		
+		
+		
 		
 		final JLabel lblMitglieder = new JLabel("Mitglieder:");
 		lblMitglieder.setEnabled(false);
 		GridBagConstraints gbc_lblMitglieder = new GridBagConstraints();
+		gbc_lblMitglieder.anchor = GridBagConstraints.EAST;
 		gbc_lblMitglieder.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMitglieder.gridx = 4;
-		gbc_lblMitglieder.gridy = 6;
+		gbc_lblMitglieder.gridy = 7;
 		add(lblMitglieder, gbc_lblMitglieder);
 		
-		final JSpinner mitgliederSpinner = new JSpinner();
-		mitgliederSpinner.setEnabled(false);
-		mitgliederSpinner.setModel(new SpinnerNumberModel(model.memberCount, 4, 20, 1));
-		GridBagConstraints gbc_mitgliederSpinner = new GridBagConstraints();
-		gbc_mitgliederSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_mitgliederSpinner.gridx = 5;
-		gbc_mitgliederSpinner.gridy = 6;
-		add(mitgliederSpinner, gbc_mitgliederSpinner);
 		
-		JLabel lblDetermSelektion = new JLabel("Umweltselektion:");
-		GridBagConstraints gbc_lblDetermSelektion = new GridBagConstraints();
-		gbc_lblDetermSelektion.gridwidth = 2;
-		gbc_lblDetermSelektion.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDetermSelektion.gridx = 0;
-		gbc_lblDetermSelektion.gridy = 7;
-		add(lblDetermSelektion, gbc_lblDetermSelektion);
 		
-		final JComboBox<String> determSelComboBox = new JComboBox<String>();
-		determSelComboBox.addItem("plus");
-		determSelComboBox.addItem("komma");
-		determSelComboBox.setSelectedIndex(0);
-		GridBagConstraints gbc_determSelComboBox = new GridBagConstraints();
-		gbc_determSelComboBox.gridwidth = 2;
-		gbc_determSelComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_determSelComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_determSelComboBox.gridx = 2;
-		gbc_determSelComboBox.gridy = 7;
-		add(determSelComboBox, gbc_determSelComboBox);
+				final JComboBox<String> verteilungComboBox = new JComboBox<String>();
+				verteilungComboBox.addItem("fitnessproportional");
+				verteilungComboBox.addItem("rangbasiert");
+				
+				final JSpinner mitgliederSpinner = new JSpinner();
+				mitgliederSpinner.setEnabled(false);
+				mitgliederSpinner.setModel(new SpinnerNumberModel(model.memberCount, 4, 20, 1));
+				GridBagConstraints gbc_mitgliederSpinner = new GridBagConstraints();
+				gbc_mitgliederSpinner.anchor = GridBagConstraints.WEST;
+				gbc_mitgliederSpinner.insets = new Insets(0, 0, 5, 5);
+				gbc_mitgliederSpinner.gridx = 5;
+				gbc_mitgliederSpinner.gridy = 7;
+				add(mitgliederSpinner, gbc_mitgliederSpinner);
+				
+				final JLabel lblVerteilung = new JLabel("Verteilung:");
+				GridBagConstraints gbc_lblVerteilung = new GridBagConstraints();
+				gbc_lblVerteilung.anchor = GridBagConstraints.EAST;
+				gbc_lblVerteilung.insets = new Insets(0, 0, 5, 5);
+				gbc_lblVerteilung.gridx = 0;
+				gbc_lblVerteilung.gridy = 8;
+				add(lblVerteilung, gbc_lblVerteilung);
+				GridBagConstraints gbc_verteilungComboBox = new GridBagConstraints();
+				gbc_verteilungComboBox.gridwidth = 2;
+				gbc_verteilungComboBox.insets = new Insets(0, 0, 5, 5);
+				gbc_verteilungComboBox.fill = GridBagConstraints.HORIZONTAL;
+				gbc_verteilungComboBox.gridx = 1;
+				gbc_verteilungComboBox.gridy = 8;
+				add(verteilungComboBox, gbc_verteilungComboBox);
+				
+				final JComboBox<String> determSelComboBox = new JComboBox<String>();
+				determSelComboBox.addItem("plus");
+				determSelComboBox.addItem("komma");
+				
+				JPanel panel_3 = new JPanel();
+				GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+				gbc_panel_3.gridwidth = 8;
+				gbc_panel_3.insets = new Insets(0, 0, 5, 5);
+				gbc_panel_3.fill = GridBagConstraints.BOTH;
+				gbc_panel_3.gridx = 0;
+				gbc_panel_3.gridy = 9;
+				add(panel_3, gbc_panel_3);
+				
+				JLabel lblDetermSelektion = new JLabel("Umweltselektion:");
+				GridBagConstraints gbc_lblDetermSelektion = new GridBagConstraints();
+				gbc_lblDetermSelektion.anchor = GridBagConstraints.EAST;
+				gbc_lblDetermSelektion.gridwidth = 2;
+				gbc_lblDetermSelektion.insets = new Insets(0, 0, 5, 5);
+				gbc_lblDetermSelektion.gridx = 0;
+				gbc_lblDetermSelektion.gridy = 10;
+				add(lblDetermSelektion, gbc_lblDetermSelektion);
+				determSelComboBox.setSelectedIndex(0);
+				GridBagConstraints gbc_determSelComboBox = new GridBagConstraints();
+				gbc_determSelComboBox.gridwidth = 2;
+				gbc_determSelComboBox.insets = new Insets(0, 0, 5, 5);
+				gbc_determSelComboBox.fill = GridBagConstraints.HORIZONTAL;
+				gbc_determSelComboBox.gridx = 2;
+				gbc_determSelComboBox.gridy = 10;
+				add(determSelComboBox, gbc_determSelComboBox);
+				
+				JLabel lblFitness = new JLabel("Fitness:");
+				GridBagConstraints gbc_lblFitness = new GridBagConstraints();
+				gbc_lblFitness.anchor = GridBagConstraints.EAST;
+				gbc_lblFitness.gridwidth = 2;
+				gbc_lblFitness.insets = new Insets(0, 0, 5, 5);
+				gbc_lblFitness.gridx = 0;
+				gbc_lblFitness.gridy = 11;
+				add(lblFitness, gbc_lblFitness);
+				
+				final JComboBox<String> fitnessComboBox = new JComboBox<String>();
+				fitnessComboBox.addItem("niedrigste");
+				fitnessComboBox.addItem("höchste");
+				fitnessComboBox.setSelectedIndex(0);
+				GridBagConstraints gbc_fitnessComboBox = new GridBagConstraints();
+				gbc_fitnessComboBox.gridwidth = 2;
+				gbc_fitnessComboBox.insets = new Insets(0, 0, 5, 5);
+				gbc_fitnessComboBox.fill = GridBagConstraints.HORIZONTAL;
+				gbc_fitnessComboBox.gridx = 2;
+				gbc_fitnessComboBox.gridy = 11;
+				add(fitnessComboBox, gbc_fitnessComboBox);
 		
-		JLabel lblFitness = new JLabel("Fitness:");
-		GridBagConstraints gbc_lblFitness = new GridBagConstraints();
-		gbc_lblFitness.gridwidth = 2;
-		gbc_lblFitness.insets = new Insets(0, 0, 5, 5);
-		gbc_lblFitness.gridx = 0;
-		gbc_lblFitness.gridy = 8;
-		add(lblFitness, gbc_lblFitness);
-		
-		final JComboBox<String> fitnessComboBox = new JComboBox<String>();
-		fitnessComboBox.addItem("niedrigste");
-		fitnessComboBox.addItem("höchste");
-		fitnessComboBox.setSelectedIndex(0);
-		GridBagConstraints gbc_fitnessComboBox = new GridBagConstraints();
-		gbc_fitnessComboBox.gridwidth = 2;
-		gbc_fitnessComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_fitnessComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_fitnessComboBox.gridx = 2;
-		gbc_fitnessComboBox.gridy = 8;
-		add(fitnessComboBox, gbc_fitnessComboBox);
-
-		JLabel lblMutationswslkt = new JLabel("Mutationswslkt.:");
-		GridBagConstraints gbc_lblMutationswslkt = new GridBagConstraints();
-		gbc_lblMutationswslkt.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMutationswslkt.gridx = 0;
-		gbc_lblMutationswslkt.gridy = 9;
-		add(lblMutationswslkt, gbc_lblMutationswslkt);
+				JLabel lblMutationswslkt = new JLabel("Mutationswslkt.:");
+				GridBagConstraints gbc_lblMutationswslkt = new GridBagConstraints();
+				gbc_lblMutationswslkt.anchor = GridBagConstraints.EAST;
+				gbc_lblMutationswslkt.insets = new Insets(0, 0, 5, 5);
+				gbc_lblMutationswslkt.gridx = 0;
+				gbc_lblMutationswslkt.gridy = 12;
+				add(lblMutationswslkt, gbc_lblMutationswslkt);
 		
 		final JSpinner mutationSpinner = new JSpinner(new SpinnerNumberModel(model.mutation, 0.0, 1.0, 0.01));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.gridwidth = 2;
+		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
 		gbc_spinner.gridx = 1;
-		gbc_spinner.gridy = 9;
+		gbc_spinner.gridy = 12;
 		add(mutationSpinner, gbc_spinner);
+		
+		JPanel panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.gridwidth = 6;
+		gbc_panel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 0;
+		gbc_panel_2.gridy = 13;
+		add(panel_2, gbc_panel_2);
 		
 		final JButton btnStarten = new JButton("Starten!");
 		btnStarten.addActionListener(new ActionListener() {
@@ -441,41 +533,15 @@ public class PropsPanel extends JPanel {
 				btnStarten.setVisible(false);
 			}
 		});
-		
+				
 		GridBagConstraints gbc_btnStarten = new GridBagConstraints();
-		gbc_btnStarten.gridwidth = 2;
+		gbc_btnStarten.insets = new Insets(0, 0, 5, 0);
+		gbc_btnStarten.gridwidth = 4;
 		gbc_btnStarten.gridx = 4;
-		gbc_btnStarten.gridy = 10;
+		gbc_btnStarten.gridy = 14;
 		add(btnStarten, gbc_btnStarten);
 
 		
-		kodierungComboBox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if(0 == kodierungComboBox.getSelectedIndex()) {
-					//binär ausgewählt
-					chckbxGraykodierung.setEnabled(true);
-					rekombinationComboBox.removeAllItems();
-					rekombinationComboBox.addItem("Zufällig");
-					rekombinationComboBox.addItem("Ein-Punkt");
-					rekombinationComboBox.addItem("Zwei-Punkt");
-					rekombinationComboBox.addItem("Template");
-					lblBitanzahl.setEnabled(true);
-					bitanzahlSpinner.setEnabled(true);
-					
-				} else {
-					//reel ausgewählt
-					chckbxGraykodierung.setEnabled(false);
-					rekombinationComboBox.removeAllItems();
-					rekombinationComboBox.addItem("Zufällig");
-					rekombinationComboBox.addItem("intermediäre");
-					rekombinationComboBox.addItem("arithmetische");
-					lblBitanzahl.setEnabled(false);
-					bitanzahlSpinner.setEnabled(false);
-					
-				}
-			}
-		});
 		
 		elternSelComboBox.addItemListener(new ItemListener() {
 			@Override
@@ -495,6 +561,8 @@ public class PropsPanel extends JPanel {
 				}
 			}
 		});
-	}
 
+		
+	}
+	
 }
